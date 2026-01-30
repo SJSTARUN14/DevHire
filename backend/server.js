@@ -22,14 +22,25 @@ app.use(express.json());
 const allowedOrigins = [
     'http://localhost:5173',
     'http://127.0.0.1:5173',
-    process.env.FRONTEND_URL // Live Firebase URL
+    process.env.FRONTEND_URL,
+    /\.onrender\.com$/, // Allow any Render app
+    /[a-z0-9-]+\.onrender\.com$/
 ].filter(Boolean);
 
 app.use(cors({
     origin: (origin, callback) => {
-        if (!origin || allowedOrigins.includes(origin)) {
+        // Allow if no origin (like mobile apps/curl) or if it matches our list
+        if (!origin) return callback(null, true);
+
+        const isAllowed = allowedOrigins.some(allowed => {
+            if (allowed instanceof RegExp) return allowed.test(origin);
+            return allowed === origin;
+        });
+
+        if (isAllowed) {
             callback(null, true);
         } else {
+            console.log("Blocked by CORS:", origin);
             callback(new Error('Not allowed by CORS'));
         }
     },
