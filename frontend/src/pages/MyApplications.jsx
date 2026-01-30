@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getMyApplications, reset } from '../redux/slices/applicationSlice';
 import { Loader2, Calendar, MapPin, CheckCircle, Clock, XCircle, FileText, TrendingUp } from 'lucide-react';
 import { formatDate } from '../utils/helpers';
+import { UPLOAD_URL } from '../utils/api';
 
 const MyApplications = () => {
     const dispatch = useDispatch();
@@ -101,7 +102,7 @@ const MyApplications = () => {
 
                         <div className="flex flex-col justify-center border-l pl-0 md:pl-6 border-gray-100 gap-2">
                             <a
-                                href={`http://localhost:5000/${app.resume}`}
+                                href={`${UPLOAD_URL}/${app.resume}`}
                                 target="_blank"
                                 rel="noreferrer"
                                 className="flex items-center gap-2 text-indigo-600 hover:text-indigo-800 font-medium text-sm"

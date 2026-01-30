@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getJobApplications, updateApplicationStatus, reset } from '../redux/slices/applicationSlice';
 import { Loader2, ArrowLeft, Download, Mail, CheckCircle, XCircle, TrendingUp, User } from 'lucide-react';
 import { toast } from 'react-hot-toast';
+import { UPLOAD_URL } from '../utils/api';
 
 const JobApplicants = () => {
     const { id } = useParams();
@@ -116,7 +117,7 @@ const JobApplicants = () => {
                                     {/* Control Panel */}
                                     <div className="flex items-center gap-1.5 p-1 bg-white border border-gray-100 rounded-2xl shadow-sm">
                                         <a
-                                            href={`http://localhost:5000/${app.resume}`}
+                                            href={`${UPLOAD_URL}/${app.resume}`}
                                             target="_blank"
                                             rel="noreferrer"
                                             className="p-3 text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-xl transition-all"

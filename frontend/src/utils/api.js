@@ -10,4 +10,6 @@ const api = axios.create({
     },
 });
 
+export const UPLOAD_URL = API_BASE_URL.replace('/api', '');
+
 export default api;
