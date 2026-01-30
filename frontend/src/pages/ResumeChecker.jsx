@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Upload, CheckCircle, FileText, AlertCircle, Loader2, ArrowRight, Sparkles, TrendingUp } from 'lucide-react';
-import axios from 'axios';
+import api from '../utils/api';
 
 const ResumeChecker = () => {
     const [resume, setResume] = useState(null);
@@ -23,7 +23,7 @@ const ResumeChecker = () => {
         formData.append('jobDescription', jobDescription);
 
         try {
-            const { data } = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/ats/analyze`, formData, {
+            const { data } = await api.post('/ats/analyze', formData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
             setResult(data);

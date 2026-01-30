@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import api from '../../utils/api';
 
 const initialState = {
     user: localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : null,
@@ -14,7 +14,7 @@ const initialState = {
 // Verify OTP
 export const verifyOTP = createAsyncThunk('auth/verifyOTP', async (otpData, thunkAPI) => {
     try {
-        const response = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/auth/verify-otp`, otpData, { withCredentials: true });
+        const response = await api.post('/auth/verify-otp', otpData);
         if (response.data && response.data._id) {
             localStorage.setItem('userInfo', JSON.stringify(response.data));
         }
@@ -28,7 +28,7 @@ export const verifyOTP = createAsyncThunk('auth/verifyOTP', async (otpData, thun
 // Login user
 export const login = createAsyncThunk('auth/login', async (userData, thunkAPI) => {
     try {
-        const response = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/auth/login`, userData, { withCredentials: true });
+        const response = await api.post('/auth/login', userData);
         if (response.data) {
             localStorage.setItem('userInfo', JSON.stringify(response.data));
         }
@@ -42,7 +42,7 @@ export const login = createAsyncThunk('auth/login', async (userData, thunkAPI) =
 // Logout
 export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
     try {
-        await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/auth/logout`, {}, { withCredentials: true });
+        await api.post('/auth/logout', {});
     } catch (error) {
         console.error('Logout request failed', error);
     } finally {
@@ -53,7 +53,7 @@ export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
 // Update Profile
 export const updateProfile = createAsyncThunk('auth/updateProfile', async (userData, thunkAPI) => {
     try {
-        const response = await axios.put(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/auth/profile`, userData, { withCredentials: true });
+        const response = await api.put('/auth/profile', userData);
         if (response.data) {
             localStorage.setItem('userInfo', JSON.stringify(response.data));
         }
@@ -67,7 +67,7 @@ export const updateProfile = createAsyncThunk('auth/updateProfile', async (userD
 // Register
 export const register = createAsyncThunk('auth/register', async (userData, thunkAPI) => {
     try {
-        const response = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/auth/register`, userData, { withCredentials: true });
+        const response = await api.post('/auth/register', userData);
         if (response.data) {
             localStorage.setItem('userInfo', JSON.stringify(response.data));
         }

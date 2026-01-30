@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { getJobs, reset } from '../redux/slices/jobSlice';
 import { Loader2, MapPin, DollarSign, Calendar, CheckCircle, Briefcase } from 'lucide-react';
 import { formatCurrency, formatDate } from '../utils/helpers';
-import axios from 'axios';
+import api from '../utils/api';
 
 const Jobs = () => {
     const dispatch = useDispatch();
@@ -30,7 +30,7 @@ const Jobs = () => {
         const fetchAppliedJobs = async () => {
             if (user && user.role === 'student') {
                 try {
-                    const { data } = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/applications/my`, { withCredentials: true });
+                    const { data } = await api.get('/applications/my');
                     if (data && Array.isArray(data)) {
                         setAppliedJobIds(data.filter(app => app && app.job).map(app => app.job._id));
                     }

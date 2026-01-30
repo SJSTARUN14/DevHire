@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../utils/api';
 import { useDispatch, useSelector } from 'react-redux';
 import { applyForJob, applyExternalJob } from '../redux/slices/applicationSlice';
 import { Loader2, MapPin, DollarSign, Calendar, Building, Briefcase, ArrowLeft, CheckCircle, Upload, Users, Share2, Linkedin, Sparkles, FileText, GraduationCap } from 'lucide-react';
@@ -24,7 +24,7 @@ const JobDetails = () => {
     useEffect(() => {
         const fetchJob = async () => {
             try {
-                const { data } = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/jobs/${id}`);
+                const { data } = await api.get(`/jobs/${id}`);
                 setJob(data);
                 setLoading(false);
             } catch (error) {
@@ -39,7 +39,7 @@ const JobDetails = () => {
         const checkStatus = async () => {
             if (user && user.role === 'student') {
                 try {
-                    const { data } = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/applications/check/${id}`, { withCredentials: true });
+                    const { data } = await api.get(`/applications/check/${id}`);
                     setHasApplied(data.applied);
                 } catch (error) {
                     console.error("Error checking application status:", error);

@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import api from '../../utils/api';
 
 const initialState = {
     jobs: [],
@@ -14,7 +14,7 @@ const initialState = {
 // Get all jobs
 export const getJobs = createAsyncThunk('jobs/getAll', async (_, thunkAPI) => {
     try {
-        const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/jobs`, { withCredentials: true });
+        const response = await api.get('/jobs');
         return response.data;
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
@@ -25,7 +25,7 @@ export const getJobs = createAsyncThunk('jobs/getAll', async (_, thunkAPI) => {
 // Get recruiter's jobs
 export const getMyJobs = createAsyncThunk('jobs/getMy', async (_, thunkAPI) => {
     try {
-        const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/jobs/my`, { withCredentials: true });
+        const response = await api.get('/jobs/my');
         return response.data;
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
@@ -36,7 +36,7 @@ export const getMyJobs = createAsyncThunk('jobs/getMy', async (_, thunkAPI) => {
 // Create Job
 export const createJob = createAsyncThunk('jobs/create', async (jobData, thunkAPI) => {
     try {
-        const response = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/jobs`, jobData, { withCredentials: true });
+        const response = await api.post('/jobs', jobData);
         return response.data;
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
