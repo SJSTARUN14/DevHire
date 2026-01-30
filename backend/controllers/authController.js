@@ -36,20 +36,13 @@ const registerUser = async (req, res) => {
                         email: userExists.email
                     });
                 } catch (emailError) {
-                    console.error("Existing User Email Fallback:", emailError.message);
-                    userExists.isVerified = true;
-                    userExists.otp = undefined;
-                    userExists.otpExpires = undefined;
-                    await userExists.save();
+                    console.error("Existing User Email Error:", emailError.message);
+                    console.log(`CRITICAL: OTP for ${userExists.email} is: ${otp}`);
 
-                    generateToken(res, userExists._id);
                     return res.status(200).json({
-                        _id: userExists._id,
-                        name: userExists.name,
-                        email: userExists.email,
-                        role: userExists.role,
-                        isVerified: true,
-                        message: 'Welcome back! Your account is now active.'
+                        message: 'Registration successful, but we had trouble sending the email. Please check your logs or contact support.',
+                        needsVerification: true,
+                        email: userExists.email
                     });
                 }
             }
@@ -75,27 +68,24 @@ const registerUser = async (req, res) => {
                     message: `Welcome to DevHire! Your verification code is: ${otp}. This code will expire in 10 minutes.`
                 });
 
+                console.log(`OTP for ${user.email} is: ${otp} (Logged for manual verification if email fails)`);
+
                 res.status(201).json({
                     message: 'Registration successful. Please check your email for the verification code.',
                     needsVerification: true,
                     email: user.email
                 });
             } catch (emailError) {
-                console.error("Email Fallback triggered:", emailError.message);
-                // If email fails, let's just verify them so they aren't stuck
-                user.isVerified = true;
-                user.otp = undefined;
-                user.otpExpires = undefined;
-                await user.save();
+                console.error("Email Sending Error:", emailError.message);
+                console.log(`CRITICAL: OTP for ${user.email} is: ${otp}. Please provide this to the user manually if needed.`);
 
-                generateToken(res, user._id);
+                // Still show the verification screen even if email fails, 
+                // so user can enter the code if they find it in logs/support
                 res.status(201).json({
-                    _id: user._id,
-                    name: user.name,
+                    message: 'Registration successful, but we had trouble sending the email. Please check back later or contact support.',
+                    needsVerification: true,
                     email: user.email,
-                    role: user.role,
-                    isVerified: true,
-                    message: 'Account active. (Email delivery failed, but you are verified!)'
+                    error: emailError.message
                 });
             }
         } else {
