@@ -37,7 +37,6 @@ const registerUser = async (req, res) => {
                     });
                 } catch (emailError) {
                     console.error("Existing User Email Error:", emailError.message);
-                    console.log(`CRITICAL: OTP for ${userExists.email} is: ${otp}`);
 
                     return res.status(200).json({
                         message: 'Registration successful, but we had trouble sending the email. Please check your logs or contact support.',
@@ -68,8 +67,6 @@ const registerUser = async (req, res) => {
                     message: `Welcome to DevHire! Your verification code is: ${otp}. This code will expire in 10 minutes.`
                 });
 
-                console.log(`OTP for ${user.email} is: ${otp} (Logged for manual verification if email fails)`);
-
                 res.status(201).json({
                     message: 'Registration successful. Please check your email for the verification code.',
                     needsVerification: true,
@@ -77,7 +74,6 @@ const registerUser = async (req, res) => {
                 });
             } catch (emailError) {
                 console.error("Email Sending Error:", emailError.message);
-                console.log(`CRITICAL: OTP for ${user.email} is: ${otp}. Please provide this to the user manually if needed.`);
 
                 // Still show the verification screen even if email fails, 
                 // so user can enter the code if they find it in logs/support
