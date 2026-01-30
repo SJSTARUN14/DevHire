@@ -5,11 +5,12 @@ const generateToken = (res, userId) => {
         expiresIn: '30d'
     });
 
-    console.log(`Generating token for ${userId}. Cookie options: secure=false, sameSite=lax`);
+    const isProduction = process.env.NODE_ENV === 'production' || !!process.env.FRONTEND_URL;
+
     res.cookie('jwt', token, {
         httpOnly: true,
-        secure: false, // Ensure this is false for localhost debugging
-        sameSite: 'lax',
+        secure: isProduction, // Secure true on production (HTTPS)
+        sameSite: isProduction ? 'none' : 'lax', // Needed for cross-domain on Render
         maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
     });
 };

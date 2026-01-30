@@ -19,6 +19,13 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Request Logging
+app.use((req, res, next) => {
+    console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+    next();
+});
 const allowedOrigins = [
     'http://localhost:5173',
     'http://127.0.0.1:5173',
@@ -73,6 +80,9 @@ app.get('/api/health', (req, res) => {
     res.json({
         status: 'API is running',
         database: dbStatus,
+        smtpConfigured: !!(process.env.SMTP_HOST && process.env.SMTP_PASSWORD),
+        nodeEnv: process.env.NODE_ENV,
+        frontEndUrl: process.env.FRONTEND_URL,
         timestamp: new Date().toISOString()
     });
 });

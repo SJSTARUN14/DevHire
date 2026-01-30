@@ -8,6 +8,7 @@ import mongoose from 'mongoose';
 const registerUser = async (req, res) => {
     try {
         const { name, email, password, role } = req.body;
+        console.log(`Registration attempt: ${name} (${email}) | Role: ${role}`);
 
         if (mongoose.connection.readyState !== 1) {
             return res.status(503).json({ message: 'Database is currently unavailable.' });
