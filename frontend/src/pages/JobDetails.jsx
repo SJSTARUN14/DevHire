@@ -24,7 +24,7 @@ const JobDetails = () => {
     useEffect(() => {
         const fetchJob = async () => {
             try {
-                const { data } = await api.get(`/jobs/${id}`);
+                const { data } = await api.get(`jobs/${id}`);
                 setJob(data);
                 setLoading(false);
             } catch (error) {
@@ -39,7 +39,7 @@ const JobDetails = () => {
         const checkStatus = async () => {
             if (user && user.role === 'student') {
                 try {
-                    const { data } = await api.get(`/applications/check/${id}`);
+                    const { data } = await api.get(`applications/check/${id}`);
                     setHasApplied(data.applied);
                 } catch (error) {
                     console.error("Error checking application status:", error);

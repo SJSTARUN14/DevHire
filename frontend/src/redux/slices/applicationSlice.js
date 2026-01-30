@@ -16,7 +16,7 @@ export const applyForJob = createAsyncThunk('applications/apply', async ({ jobId
         formData.append('jobId', jobId);
         formData.append('resume', resume);
 
-        const response = await api.post('/applications', formData, {
+        const response = await api.post('applications', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
@@ -31,7 +31,7 @@ export const applyForJob = createAsyncThunk('applications/apply', async ({ jobId
 // Apply for a job (External company site)
 export const applyExternalJob = createAsyncThunk('applications/applyExternal', async ({ jobId }, thunkAPI) => {
     try {
-        const response = await api.post('/applications/external', { jobId });
+        const response = await api.post('applications/external', { jobId });
         return response.data;
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
@@ -42,7 +42,7 @@ export const applyExternalJob = createAsyncThunk('applications/applyExternal', a
 // Get My Applications
 export const getMyApplications = createAsyncThunk('applications/getMy', async (_, thunkAPI) => {
     try {
-        const response = await api.get('/applications/my');
+        const response = await api.get('applications/my');
         return response.data;
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
@@ -53,7 +53,7 @@ export const getMyApplications = createAsyncThunk('applications/getMy', async (_
 // Get Applications for a specific job (Recruiter)
 export const getJobApplications = createAsyncThunk('applications/getByJob', async (jobId, thunkAPI) => {
     try {
-        const response = await api.get(`/applications/job/${jobId}`);
+        const response = await api.get(`applications/job/${jobId}`);
         return response.data;
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
@@ -64,7 +64,7 @@ export const getJobApplications = createAsyncThunk('applications/getByJob', asyn
 // Update Application Status
 export const updateApplicationStatus = createAsyncThunk('applications/updateStatus', async ({ id, status }, thunkAPI) => {
     try {
-        const response = await api.put(`/applications/${id}/status`, { status });
+        const response = await api.put(`applications/${id}/status`, { status });
         return response.data;
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();

@@ -23,7 +23,7 @@ const ResumeChecker = () => {
         formData.append('jobDescription', jobDescription);
 
         try {
-            const { data } = await api.post('/ats/analyze', formData, {
+            const { data } = await api.post('ats/analyze', formData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
             setResult(data);

@@ -18,7 +18,7 @@ const Dashboard = () => {
         if (user?.role === 'student') {
             const fetchStats = async () => {
                 try {
-                    const { data } = await api.get('/users/stats');
+                    const { data } = await api.get('users/stats');
                     setStats(data);
                 } catch (error) {
                     const message = error.response?.data?.message || error.message || "Could not fetch stats";

@@ -30,7 +30,7 @@ const Jobs = () => {
         const fetchAppliedJobs = async () => {
             if (user && user.role === 'student') {
                 try {
-                    const { data } = await api.get('/applications/my');
+                    const { data } = await api.get('applications/my');
                     if (data && Array.isArray(data)) {
                         setAppliedJobIds(data.filter(app => app && app.job).map(app => app.job._id));
                     }

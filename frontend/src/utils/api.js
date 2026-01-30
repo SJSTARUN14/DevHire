@@ -3,13 +3,16 @@ import axios from 'axios';
 // Dynamically determine the API base URL
 // Priority: 1. Environment variable 2. Current window location (for same-origin) 3. Localhost fallback
 const getBaseURL = () => {
-    if (import.meta.env.VITE_API_URL) return import.meta.env.VITE_API_URL;
-    if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
-        // If we're on a live site but VITE_API_URL is missing, 
-        // try to guess the backend URL or use a relative path if served from same host
-        return '/api';
+    let url = import.meta.env.VITE_API_URL;
+    if (!url && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+        url = '/api';
     }
-    return 'http://localhost:5000/api';
+    if (!url) url = 'http://localhost:5000/api';
+
+    // Ensure it ends with / so axios appends relative paths correctly
+    const finalUrl = url.endsWith('/') ? url : `${url}/`;
+    console.log("DevHire API Base URL:", finalUrl);
+    return finalUrl;
 };
 
 const API_BASE_URL = getBaseURL();
@@ -22,6 +25,9 @@ const api = axios.create({
     },
 });
 
-export const UPLOAD_URL = API_BASE_URL.replace('/api', '');
+// UPLOAD_URL should be the base domain without the /api/ part
+export const UPLOAD_URL = API_BASE_URL.endsWith('/api/')
+    ? API_BASE_URL.slice(0, -5)
+    : API_BASE_URL.replace('/api/', '');
 
 export default api;

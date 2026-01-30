@@ -19,7 +19,7 @@ const initialState = {
 // Get Company Stats
 export const getCompanyStats = createAsyncThunk('company/getStats', async (_, thunkAPI) => {
     try {
-        const response = await api.get('/companies/stats');
+        const response = await api.get('companies/stats');
         return response.data;
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
@@ -30,7 +30,7 @@ export const getCompanyStats = createAsyncThunk('company/getStats', async (_, th
 // Get Recruiters
 export const getRecruiters = createAsyncThunk('company/getRecruiters', async (_, thunkAPI) => {
     try {
-        const response = await api.get('/companies/recruiters');
+        const response = await api.get('companies/recruiters');
         return response.data;
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
@@ -41,7 +41,7 @@ export const getRecruiters = createAsyncThunk('company/getRecruiters', async (_,
 // Add Recruiter
 export const addRecruiter = createAsyncThunk('company/addRecruiter', async (recruiterData, thunkAPI) => {
     try {
-        const response = await api.post('/companies/recruiters', recruiterData);
+        const response = await api.post('companies/recruiters', recruiterData);
         return response.data;
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
