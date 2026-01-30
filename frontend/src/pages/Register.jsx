@@ -56,6 +56,7 @@ const Register = () => {
                 password,
                 role
             };
+            console.log("Submitting registration:", { ...userData, password: '***' });
             dispatch(register(userData));
         }
     };

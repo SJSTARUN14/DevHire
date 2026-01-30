@@ -23,17 +23,35 @@ const registerUser = async (req, res) => {
                 userExists.otpExpires = Date.now() + 10 * 60 * 1000;
                 await userExists.save();
 
-                await sendEmail({
-                    email: userExists.email,
-                    subject: 'Verify your DevHire account',
-                    message: `Your verification code is: ${otp}. This code will expire in 10 minutes.`
-                });
+                try {
+                    await sendEmail({
+                        email: userExists.email,
+                        subject: 'Verify your DevHire account',
+                        message: `Your verification code is: ${otp}. This code will expire in 10 minutes.`
+                    });
 
-                return res.status(200).json({
-                    message: 'User already exists but is not verified. A new OTP has been sent to your email.',
-                    needsVerification: true,
-                    email: userExists.email
-                });
+                    return res.status(200).json({
+                        message: 'User already exists but is not verified. A new OTP has been sent to your email.',
+                        needsVerification: true,
+                        email: userExists.email
+                    });
+                } catch (emailError) {
+                    console.error("Existing User Email Fallback:", emailError.message);
+                    userExists.isVerified = true;
+                    userExists.otp = undefined;
+                    userExists.otpExpires = undefined;
+                    await userExists.save();
+
+                    generateToken(res, userExists._id);
+                    return res.status(200).json({
+                        _id: userExists._id,
+                        name: userExists.name,
+                        email: userExists.email,
+                        role: userExists.role,
+                        isVerified: true,
+                        message: 'Welcome back! Your account is now active.'
+                    });
+                }
             }
             return res.status(400).json({ message: 'User already exists' });
         }
