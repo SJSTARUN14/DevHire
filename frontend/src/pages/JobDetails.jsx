@@ -24,7 +24,7 @@ const JobDetails = () => {
     useEffect(() => {
         const fetchJob = async () => {
             try {
-                const { data } = await axios.get(`http://localhost:5000/api/jobs/${id}`);
+                const { data } = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/jobs/${id}`);
                 setJob(data);
                 setLoading(false);
             } catch (error) {
@@ -39,7 +39,7 @@ const JobDetails = () => {
         const checkStatus = async () => {
             if (user && user.role === 'student') {
                 try {
-                    const { data } = await axios.get(`http://localhost:5000/api/applications/check/${id}`, { withCredentials: true });
+                    const { data } = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/applications/check/${id}`, { withCredentials: true });
                     setHasApplied(data.applied);
                 } catch (error) {
                     console.error("Error checking application status:", error);

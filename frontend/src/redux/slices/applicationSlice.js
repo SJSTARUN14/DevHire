@@ -16,7 +16,7 @@ export const applyForJob = createAsyncThunk('applications/apply', async ({ jobId
         formData.append('jobId', jobId);
         formData.append('resume', resume);
 
-        const response = await axios.post('http://localhost:5000/api/applications', formData, {
+        const response = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/applications`, formData, {
             withCredentials: true,
             headers: {
                 'Content-Type': 'multipart/form-data',
@@ -32,7 +32,7 @@ export const applyForJob = createAsyncThunk('applications/apply', async ({ jobId
 // Apply for a job (External company site)
 export const applyExternalJob = createAsyncThunk('applications/applyExternal', async ({ jobId }, thunkAPI) => {
     try {
-        const response = await axios.post('http://localhost:5000/api/applications/external', { jobId }, { withCredentials: true });
+        const response = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/applications/external`, { jobId }, { withCredentials: true });
         return response.data;
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
@@ -43,7 +43,7 @@ export const applyExternalJob = createAsyncThunk('applications/applyExternal', a
 // Get My Applications
 export const getMyApplications = createAsyncThunk('applications/getMy', async (_, thunkAPI) => {
     try {
-        const response = await axios.get('http://localhost:5000/api/applications/my', { withCredentials: true });
+        const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/applications/my`, { withCredentials: true });
         return response.data;
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
@@ -54,7 +54,7 @@ export const getMyApplications = createAsyncThunk('applications/getMy', async (_
 // Get Applications for a specific job (Recruiter)
 export const getJobApplications = createAsyncThunk('applications/getByJob', async (jobId, thunkAPI) => {
     try {
-        const response = await axios.get(`http://localhost:5000/api/applications/job/${jobId}`, { withCredentials: true });
+        const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/applications/job/${jobId}`, { withCredentials: true });
         return response.data;
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
@@ -65,7 +65,7 @@ export const getJobApplications = createAsyncThunk('applications/getByJob', asyn
 // Update Application Status
 export const updateApplicationStatus = createAsyncThunk('applications/updateStatus', async ({ id, status }, thunkAPI) => {
     try {
-        const response = await axios.put(`http://localhost:5000/api/applications/${id}/status`, { status }, { withCredentials: true });
+        const response = await axios.put(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/applications/${id}/status`, { status }, { withCredentials: true });
         return response.data;
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();

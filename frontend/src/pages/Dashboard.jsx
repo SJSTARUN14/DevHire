@@ -18,7 +18,7 @@ const Dashboard = () => {
         if (user?.role === 'student') {
             const fetchStats = async () => {
                 try {
-                    const { data } = await axios.get('http://localhost:5000/api/users/stats', { withCredentials: true });
+                    const { data } = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/users/stats`, { withCredentials: true });
                     setStats(data);
                 } catch (error) {
                     const message = error.response?.data?.message || error.message || "Could not fetch stats";

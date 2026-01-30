@@ -30,7 +30,7 @@ const Jobs = () => {
         const fetchAppliedJobs = async () => {
             if (user && user.role === 'student') {
                 try {
-                    const { data } = await axios.get('http://localhost:5000/api/applications/my', { withCredentials: true });
+                    const { data } = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/applications/my`, { withCredentials: true });
                     if (data && Array.isArray(data)) {
                         setAppliedJobIds(data.filter(app => app && app.job).map(app => app.job._id));
                     }
