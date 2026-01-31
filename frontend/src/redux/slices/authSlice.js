@@ -29,7 +29,7 @@ export const verifyOTP = createAsyncThunk('auth/verifyOTP', async (otpData, thun
 export const login = createAsyncThunk('auth/login', async (userData, thunkAPI) => {
     try {
         const response = await api.post('auth/login', userData);
-        if (response.data) {
+        if (response.data && !response.data.needsVerification) {
             localStorage.setItem('userInfo', JSON.stringify(response.data));
         }
         return response.data;
@@ -68,7 +68,7 @@ export const updateProfile = createAsyncThunk('auth/updateProfile', async (userD
 export const register = createAsyncThunk('auth/register', async (userData, thunkAPI) => {
     try {
         const response = await api.post('auth/register', userData);
-        if (response.data) {
+        if (response.data && !response.data.needsVerification) {
             localStorage.setItem('userInfo', JSON.stringify(response.data));
         }
         return response.data;

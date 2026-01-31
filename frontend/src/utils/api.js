@@ -25,10 +25,23 @@ const api = axios.create({
     },
 });
 
-// Response interceptor for handling 401s (stale sessions)
+// Request Interceptor: Log outgoing requests for debugging
+api.interceptors.request.use((config) => {
+    console.log(`[API REQUEST] ${config.method?.toUpperCase()} ${config.baseURL}${config.url}`, config.data);
+    return config;
+}, (error) => {
+    return Promise.reject(error);
+});
+
+// Response interceptor for handling 401s (stale sessions) and logging
 api.interceptors.response.use(
-    (response) => response,
+    (response) => {
+        console.log(`[API RESPONSE] ${response.status} ${response.config.url}`, response.data);
+        return response;
+    },
     (error) => {
+        console.error(`[API ERROR] ${error.response?.status || 'NETWORK'} ${error.config?.url}`, error.response?.data || error.message);
+
         if (error.response && error.response.status === 401) {
             console.warn("Session expired or unauthorized. Clearing local state.");
             localStorage.removeItem('userInfo');

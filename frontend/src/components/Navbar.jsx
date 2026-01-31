@@ -28,7 +28,7 @@ const Navbar = () => {
 
                     {/* Desktop Menu */}
                     <div className="hidden md:flex items-center space-x-8">
-                        {user ? (
+                        {user && user.name ? (
                             <>
                                 <Link to="/dashboard" className="text-gray-700 hover:text-indigo-600 font-medium transition-colors">
                                     Dashboard
