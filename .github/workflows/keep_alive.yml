@@ -1,0 +1,17 @@
+name: Keep Render Awake
+
+on:
+  schedule:
+    # Runs every 14 minutes to prevent Render's 15-minute sleep timer
+    - cron: '*/14 * * * *'
+  workflow_dispatch: # Allows manual trigger for testing
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Backend
+        run: curl -s https://devhire-backend-ewec.onrender.com/api/health
+      
+      - name: Ping Frontend
+        run: curl -s https://devhire-frontend.onrender.com/
