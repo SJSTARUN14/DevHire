@@ -19,25 +19,21 @@ const sendEmail = async (options) => {
 
             if (error) {
                 console.error('[RESEND ERROR]', error.message);
-                // If it's a restriction error, we report it clearly
-                if (error.message.includes('test') || error.message.includes('verified')) {
-                    throw new Error(`Resend Free Tier: Only allowed to send to account owner. Verify a domain to send to others.`);
-                }
-                throw new Error(error.message);
+                // Report Resend errors directly. Do NOT fallback to SMTP which we know is blocked on Render.
+                throw new Error(`Email Service Error: ${error.message}${error.message.includes('verify') ? ' (Add recipient to Resend testing list or verify your domain)' : ''}`);
             }
 
             console.log('[RESEND] Email delivered successfully via SDK');
             return data;
         } catch (err) {
-            console.warn('[RESEND FALLBACK]', err.message);
-            // If it's the unverified recipient error, don't try SMTP backup as it will fail too
-            if (err.message.includes('Verify a domain')) {
-                throw err;
-            }
+            console.error('[RESEND CRITICAL]', err.message);
+            throw err; // Stop here, do not fallback to slow/blocked SMTP
         }
     }
 
-    // 2. STANDARD OPTION: NODEMAILER (Gmail/Other SMTP)
+    // 2. FALLBACK OPTION: NODEMAILER (Only if Resend key is missing)
+    console.warn('[SMTP] Resend API Key missing. Using legacy SMTP (High risk of timeout on Cloud Platforms)');
+
     const host = process.env.SMTP_HOST || 'smtp.gmail.com';
     const port = parseInt(process.env.SMTP_PORT || 587);
 
@@ -50,7 +46,7 @@ const sendEmail = async (options) => {
             pass: process.env.SMTP_PASSWORD,
         },
         tls: { rejectUnauthorized: false },
-        connectionTimeout: 30000,
+        connectionTimeout: 20000,
     });
 
     const message = {
@@ -66,7 +62,7 @@ const sendEmail = async (options) => {
         console.log('[SMTP] Email delivered successfully');
     } catch (error) {
         console.error('[SMTP ERROR]', error.message);
-        throw new Error(`Email delivery failed: ${error.message} (Check Render Network Logs)`);
+        throw new Error(`Email delivery failed (SMTP): ${error.message}`);
     }
 };
 
