@@ -85,9 +85,9 @@ const registerUser = async (req, res) => {
                 console.error("Email Sending Error:", emailError.message);
 
                 // Still show the verification screen even if email fails, 
-                // so user can enter the code if they find it in logs/support
+                // so the user can see the code on the screen in our new 'Demo Fallback'
                 res.status(201).json({
-                    message: `Registration successful, but we had trouble sending the email (${emailError.message}). Please check back later or contact support.`,
+                    message: `Registration successful, but we had trouble sending the email (${emailError.message}). YOUR DEMO CODE IS: ${otp}`,
                     needsVerification: true,
                     email: user.email,
                     error: emailError.message
