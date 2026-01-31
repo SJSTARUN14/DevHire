@@ -28,6 +28,8 @@ const registerUser = async (req, res) => {
                 userExists.otpExpires = Date.now() + 10 * 60 * 1000;
                 await userExists.save();
 
+                console.log(`[OTP DEBUG] Code for ${userExists.email}: ${otp}`);
+
                 try {
                     await sendEmail({
                         email: userExists.email,
@@ -63,6 +65,8 @@ const registerUser = async (req, res) => {
             otp,
             otpExpires: Date.now() + 10 * 60 * 1000
         });
+
+        console.log(`[OTP DEBUG] Code for ${user.email}: ${otp}`);
 
         if (user) {
             try {

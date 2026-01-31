@@ -1,22 +1,18 @@
 import nodemailer from 'nodemailer';
 
 const sendEmail = async (options) => {
-    // Explicit 465 SSL Config (Most reliable on Render)
+    // Official Gmail service helper - most reliable
     const transporter = nodemailer.createTransport({
-        host: 'smtp.gmail.com',
-        port: 465,
-        secure: true,
+        service: 'gmail',
         auth: {
             user: process.env.SMTP_EMAIL,
             pass: process.env.SMTP_PASSWORD,
         },
-        tls: {
-            rejectUnauthorized: false
-        }
+        connectionTimeout: 30000, // 30 seconds for slow networks
     });
 
     const message = {
-        from: `"${process.env.FROM_NAME}" <${process.env.SMTP_EMAIL}>`,
+        from: `"${process.env.FROM_NAME || 'DevHire'}" <${process.env.SMTP_EMAIL}>`,
         to: options.email,
         subject: options.subject,
         text: options.message,
