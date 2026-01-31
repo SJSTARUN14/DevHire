@@ -44,7 +44,7 @@ const registerUser = async (req, res) => {
                     console.error("Existing User Email Error:", emailError.message);
 
                     return res.status(200).json({
-                        message: 'Registration successful, but we had trouble sending the email. Please check your logs or contact support.',
+                        message: `Registration successful, but we had trouble sending the verification email (${emailError.message}). Please contact support if this persists.`,
                         needsVerification: true,
                         email: userExists.email
                     });
@@ -83,7 +83,7 @@ const registerUser = async (req, res) => {
                 // Still show the verification screen even if email fails, 
                 // so user can enter the code if they find it in logs/support
                 res.status(201).json({
-                    message: 'Registration successful, but we had trouble sending the email. Please check back later or contact support.',
+                    message: `Registration successful, but we had trouble sending the email (${emailError.message}). Please check back later or contact support.`,
                     needsVerification: true,
                     email: user.email,
                     error: emailError.message
