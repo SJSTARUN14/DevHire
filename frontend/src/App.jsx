@@ -10,7 +10,6 @@ import ManageJobs from './pages/ManageJobs';
 import JobApplicants from './pages/JobApplicants';
 import MyApplications from './pages/MyApplications';
 import Profile from './pages/Profile';
-import ResumeChecker from './pages/ResumeChecker';
 import Recruiters from './pages/Recruiters';
 import Analytics from './pages/Analytics';
 import DashboardLayout from './layouts/DashboardLayout';
@@ -37,7 +36,6 @@ function App() {
             <Route path="/manage-jobs" element={<ManageJobs />} />
             <Route path="/my-applications" element={<MyApplications />} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/resume-checker" element={<ResumeChecker />} />
             <Route path="/recruiters" element={<Recruiters />} />
             <Route path="/analytics" element={<Analytics />} />
           </Route>

@@ -63,10 +63,6 @@ const DashboardLayout = () => {
                                         <FileText size={20} />
                                         <span>My Applications</span>
                                     </Link>
-                                    <Link to="/resume-checker" className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all ${isActive('/resume-checker')}`}>
-                                        <FileText size={20} />
-                                        <span>Resume Checker</span>
-                                    </Link>
                                 </>
                             )}
 

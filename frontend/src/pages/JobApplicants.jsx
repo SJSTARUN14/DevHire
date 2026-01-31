@@ -52,7 +52,7 @@ const JobApplicants = () => {
             <div className="bg-white rounded-3xl shadow-xl shadow-gray-100/50 border border-gray-100 overflow-hidden">
                 <div className="p-8 border-b border-gray-50 bg-gray-50/30">
                     <h1 className="text-2xl font-black text-gray-900 tracking-tight">Application Review Board</h1>
-                    <p className="text-gray-500 text-sm font-medium">Ranked by AI-Semantic Match Match Score</p>
+                    <p className="text-gray-500 text-sm font-medium">Review and manage all applicants for this position</p>
                 </div>
 
                 <ul className="divide-y divide-gray-100">
@@ -86,45 +86,21 @@ const JobApplicants = () => {
                                 </div>
 
                                 <div className="flex flex-col sm:flex-row sm:items-center gap-8">
-                                    {/* Advanced Stats */}
-                                    <div className="flex items-center gap-5 bg-white p-4 rounded-2xl border border-gray-100 shadow-sm">
-                                        <div className="text-right">
-                                            <div className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1 leading-none">AI Fit Match</div>
-                                            <div className={`text-3xl font-black leading-none ${app.atsScore > 80 ? 'text-emerald-600' : app.atsScore > 50 ? 'text-amber-500' : 'text-rose-500'
-                                                }`}>
-                                                {app.atsScore}%
-                                            </div>
-                                        </div>
-                                        <div className="w-1.5 h-12 bg-gray-50 rounded-full overflow-hidden flex flex-col justify-end">
-                                            <div
-                                                className={`w-full transition-all duration-1000 origin-bottom ${app.atsScore > 80 ? 'bg-emerald-500' : app.atsScore > 50 ? 'bg-amber-500' : 'bg-rose-500'
-                                                    }`}
-                                                style={{ height: `${app.atsScore}%` }}
-                                            />
-                                        </div>
-                                        {app.matchDetails?.matchedSkills?.length > 0 && (
-                                            <div className="hidden md:block max-w-[150px]">
-                                                <div className="text-[9px] font-black text-gray-400 uppercase tracking-tight mb-1">Key Strengths</div>
-                                                <div className="flex flex-wrap gap-1">
-                                                    {app.matchDetails.matchedSkills.slice(0, 3).map((s, idx) => (
-                                                        <span key={idx} className="text-[8px] font-bold bg-indigo-50 text-indigo-600 px-1.5 py-0.5 rounded-md uppercase border border-indigo-100">{s}</span>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        )}
-                                    </div>
-
                                     {/* Control Panel */}
                                     <div className="flex items-center gap-1.5 p-1 bg-white border border-gray-100 rounded-2xl shadow-sm">
-                                        <a
-                                            href={`${UPLOAD_URL}/${app.resume}`}
-                                            target="_blank"
-                                            rel="noreferrer"
-                                            className="p-3 text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-xl transition-all"
-                                            title="Download Resume"
-                                        >
-                                            <Download size={22} />
-                                        </a>
+                                        {app.resume && app.resume !== 'External Application' ? (
+                                            <a
+                                                href={app.resume.startsWith('http') ? app.resume : `${UPLOAD_URL}/${app.resume}`}
+                                                target="_blank"
+                                                rel="noreferrer"
+                                                className="p-3 text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-xl transition-all"
+                                                title="View Resume"
+                                            >
+                                                <Download size={22} />
+                                            </a>
+                                        ) : (
+                                            <div className="p-3 text-gray-300 italic text-xs">External</div>
+                                        )}
                                         <div className="w-px h-8 bg-gray-50" />
                                         <button
                                             onClick={() => handleStatusUpdate(app._id, 'shortlisted')}

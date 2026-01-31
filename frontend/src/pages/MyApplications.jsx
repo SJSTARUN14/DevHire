@@ -76,39 +76,21 @@ const MyApplications = () => {
                                 </div>
                             </div>
 
-                            {/* Advanced AI Insight */}
-                            <div className="mt-6 p-4 bg-indigo-50/50 rounded-2xl border border-indigo-100/50">
-                                <div className="flex justify-between items-center mb-2">
-                                    <span className="text-[10px] font-black text-indigo-400 uppercase tracking-widest flex items-center gap-1.5">
-                                        <TrendingUp size={12} /> AI Performance Insight
-                                    </span>
-                                    <span className={`text-xs font-black ${app.atsScore > 70 ? 'text-emerald-600' : 'text-amber-600'}`}>
-                                        {app.atsScore}% MATCH
-                                    </span>
-                                </div>
-                                <div className="w-full bg-indigo-100/50 rounded-full h-1.5 mb-2 overflow-hidden">
-                                    <div
-                                        className={`h-full transition-all duration-1000 ${app.atsScore > 70 ? 'bg-emerald-500' : 'bg-amber-500'}`}
-                                        style={{ width: `${app.atsScore}%` }}
-                                    ></div>
-                                </div>
-                                {app.matchDetails?.analysis && (
-                                    <p className="text-xs text-indigo-900/80 font-semibold leading-relaxed">
-                                        "{app.matchDetails.analysis}"
-                                    </p>
-                                )}
-                            </div>
                         </div>
 
                         <div className="flex flex-col justify-center border-l pl-0 md:pl-6 border-gray-100 gap-2">
-                            <a
-                                href={`${UPLOAD_URL}/${app.resume}`}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="flex items-center gap-2 text-indigo-600 hover:text-indigo-800 font-medium text-sm"
-                            >
-                                <FileText size={16} /> View Resume
-                            </a>
+                            {app.resume && app.resume !== 'External Application' ? (
+                                <a
+                                    href={app.resume.startsWith('http') ? app.resume : `${UPLOAD_URL}/${app.resume}`}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="flex items-center gap-2 text-indigo-600 hover:text-indigo-800 font-medium text-sm"
+                                >
+                                    <FileText size={16} /> View Resume
+                                </a>
+                            ) : (
+                                <span className="text-gray-400 text-sm font-medium italic">External App</span>
+                            )}
                         </div>
                     </div>
                 ))}
