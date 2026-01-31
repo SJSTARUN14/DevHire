@@ -4,14 +4,20 @@ import axios from 'axios';
 // Priority: 1. Environment variable 2. Current window location (for same-origin) 3. Localhost fallback
 const getBaseURL = () => {
     let url = import.meta.env.VITE_API_URL;
-    if (!url && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
-        url = '/api';
+
+    // Fallback logic for production (Render)
+    if (!url || url === '/api' || url === '/api/') {
+        if (window.location.hostname.includes('onrender.com')) {
+            // HARDCODED FALLBACK for your specific Render backend
+            url = 'https://devhire-backend-ewec.onrender.com/api/';
+        } else {
+            url = 'http://localhost:5000/api/';
+        }
     }
-    if (!url) url = 'http://localhost:5000/api';
 
     // Ensure it ends with / so axios appends relative paths correctly
     const finalUrl = url.endsWith('/') ? url : `${url}/`;
-    console.log("DevHire API Base URL:", finalUrl);
+    console.log("DevHire API Base URL (Active):", finalUrl);
     return finalUrl;
 };
 

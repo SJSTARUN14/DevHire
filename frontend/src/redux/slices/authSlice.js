@@ -1,8 +1,26 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import api from '../../utils/api';
 
+const getSafeInitialUser = () => {
+    try {
+        const userData = localStorage.getItem('userInfo');
+        if (!userData) return null;
+        const parsed = JSON.parse(userData);
+        // Only consider it a valid session if we have a name and ID (verified user)
+        if (parsed && parsed._id && parsed.name) {
+            return parsed;
+        }
+        // If it's a partial object (like just needsVerification), clear it
+        localStorage.removeItem('userInfo');
+        return null;
+    } catch (e) {
+        localStorage.removeItem('userInfo');
+        return null;
+    }
+};
+
 const initialState = {
-    user: localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : null,
+    user: getSafeInitialUser(),
     isLoading: false,
     isError: false,
     isSuccess: false,

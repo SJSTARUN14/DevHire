@@ -8,8 +8,15 @@ const DashboardLayout = () => {
     const { user } = authState;
     const location = useLocation();
 
-    if (!user) {
-        return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
+    if (!user || !user.name) {
+        return (
+            <div className="min-h-screen flex flex-col items-center justify-center gap-4 bg-gray-50">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+                <p className="text-gray-500 font-medium tracking-tight">Checking your session...</p>
+                {/* Fallback link if stuck */}
+                <Link to="/login" className="text-xs text-indigo-600 hover:underline">Back to Login</Link>
+            </div>
+        );
     }
 
     const isActive = (path) => {

@@ -83,6 +83,20 @@ app.get('/api', (req, res) => {
     });
 });
 
+app.get('/api/health/test-email', async (req, res) => {
+    try {
+        const email = req.query.email || process.env.SMTP_EMAIL;
+        await sendEmail({
+            email,
+            subject: 'DevHire SMTP Test',
+            message: `SMTP testing successful! This email was sent at ${new Date().toISOString()}`
+        });
+        res.json({ message: `Test email sent successfully to ${email}` });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 app.get('/api/health', (req, res) => {
     const dbStatus = mongoose.connection.readyState === 1 ? 'Connected' : 'Disconnected';
     res.json({
