@@ -59,15 +59,6 @@ app.use(cors({
 app.use(cookieParser());
 app.use('/uploads', express.static('uploads')); // Serve uploaded files
 
-// Database Connection
-console.log('Attempting to connect to MongoDB...');
-try {
-    await connectDB();
-    console.log('DB Connection Initialized');
-} catch (error) {
-    console.error('Failed to initialize DB. Server will start but DB features may fail.');
-}
-
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/jobs', jobRoutes);
@@ -76,14 +67,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/ats', atsRoutes);
 app.use('/api/companies', companyRoutes);
 
-// Root API route
-app.get('/api', (req, res) => {
-    res.json({
-        message: 'DevHire API is running',
-        version: '1.0.0'
-    });
-});
-
+// Root API routes for health checks
 app.get('/api/health/test-email', async (req, res) => {
     try {
         const email = req.query.email || process.env.SMTP_EMAIL;
@@ -94,6 +78,7 @@ app.get('/api/health/test-email', async (req, res) => {
         });
         res.json({ message: `Test email sent successfully to ${email}` });
     } catch (error) {
+        console.error('[HEALTH TEST ERROR]', error.message);
         res.status(500).json({ error: error.message });
     }
 });
@@ -103,20 +88,38 @@ app.get('/api/health', (req, res) => {
     res.json({
         status: 'API is running',
         database: dbStatus,
-        smtpConfigured: !!(process.env.SMTP_HOST && process.env.SMTP_PASSWORD),
+        smtpConfigured: !!(process.env.SMTP_HOST || process.env.RESEND_API_KEY),
         nodeEnv: process.env.NODE_ENV,
         frontEndUrl: process.env.FRONTEND_URL,
         timestamp: new Date().toISOString()
     });
 });
 
+app.get('/api', (req, res) => {
+    res.json({ message: 'DevHire API is running', version: '1.0.0' });
+});
+
 app.get('/', (req, res) => {
     res.send('API is running...');
 });
 
+// Error Handling
 app.use(notFound);
 app.use(errorHandler);
 
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+// Database and Server Start
+const startServer = async () => {
+    try {
+        console.log('Attempting to connect to MongoDB...');
+        await connectDB();
+        console.log('MongoDB Connected successfully');
+    } catch (error) {
+        console.error(`MongoDB Connection Error: ${error.message}`);
+    }
+
+    app.listen(PORT, () => {
+        console.log(`Server running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
+    });
+};
+
+startServer();
