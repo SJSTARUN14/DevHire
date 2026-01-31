@@ -17,28 +17,36 @@ I tried to keep things very simple:
 
 ---
 
-### 📸 Screenshots of the App
+### 📸 App Gallery
 
-Here is how the website looks:
+<div align="center">
+  <h3>Home Page</h3>
+  <img src="./screenshots/home.png" width="800" alt="Home Page" />
 
-**Home Page**
-![Home Page](./screenshots/home.png)
+  <br/><br/>
+  
+  <h3>Smart Features</h3>
+  <img src="./screenshots/features.png" width="800" alt="Features" />
 
-**Smart Features**
-![Features](./screenshots/features.png)
+  <br/><br/>
 
-**Referral Format for Students**
-*(I added this to help freshers reach out to companies easily!)*
-![Job Details](./screenshots/job_details.png)
+  <h3>Referral Format for Students</h3>
+  <p><i>(I added this to help freshers reach out to companies easily!)</i></p>
+  <img src="./screenshots/job_details.png" width="800" alt="Job Details" />
 
-**Recruiter Dashboard**
-![Recruiter Dashboard](./screenshots/recruiter_dashboard.png)
+  <br/><br/>
 
-**Posting a New Job**
-![Post Job](./screenshots/post_job.png)
+  <div style="display: flex; justify-content: space-around;">
+    <img src="./screenshots/recruiter_dashboard.png" width="390" alt="Recruiter Dashboard" />
+    <img src="./screenshots/manage_jobs.png" width="390" alt="Manage Jobs" />
+  </div>
+  <p><i>Left: Recruiter Overview | Right: Manage Postings</i></p>
 
-**Managing Jobs**
-![Manage Jobs](./screenshots/manage_jobs.png)
+  <br/><br/>
+
+  <h3>Easy Registration</h3>
+  <img src="./screenshots/register.png" width="500" alt="Register" />
+</div>
 
 ---
 
