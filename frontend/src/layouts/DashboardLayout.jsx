@@ -12,10 +12,13 @@ const DashboardLayout = () => {
 
     if (!user || !user.name) {
         return (
-            <div className="min-h-screen flex flex-col items-center justify-center gap-4 bg-gray-50">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
-                <p className="text-gray-500 font-medium tracking-tight">Checking your session...</p>
-                <Link to="/login" className="text-xs text-indigo-600 hover:underline">Back to Login</Link>
+            <div className="min-h-screen flex flex-col items-center justify-center gap-4 bg-white">
+                <div className="flex flex-col items-center gap-2">
+                    <div className="animate-spin rounded-full h-10 w-10 border-4 border-indigo-100 border-t-indigo-600"></div>
+                    <span className="text-sm font-bold text-indigo-600/50 uppercase tracking-widest animate-pulse">DevHire</span>
+                </div>
+                <p className="text-gray-400 text-xs font-medium tracking-tight">Syncing your session...</p>
+                <Link to="/login" className="mt-4 px-4 py-2 bg-indigo-50 text-indigo-600 rounded-lg text-xs font-bold hover:bg-indigo-100 transition-colors">Back to Login</Link>
             </div>
         );
     }
