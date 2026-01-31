@@ -10,7 +10,7 @@ const Jobs = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    // Safely destructure state with defaults
+    
     const jobState = useSelector((state) => state.jobs || {});
     const { jobs = [], isLoading = false, isError = false, message = '' } = jobState;
 

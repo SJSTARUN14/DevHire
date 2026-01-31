@@ -1,10 +1,7 @@
 import { extractSkills } from './resumeParser.js';
 import axios from 'axios';
 
-/**
- * Advanced ATS Scoring Logic
- * Combines keyword matching with AI semantic analysis
- */
+
 export const calculateATSScore = async (resumeText, jobDescription) => {
     const apiKey = process.env.GEMINI_API_KEY;
     if (!resumeText || !jobDescription) {
@@ -17,14 +14,14 @@ export const calculateATSScore = async (resumeText, jobDescription) => {
         };
     }
 
-    // 1. Keyword Extraction & Base Matching
+    
     const resumeSkills = extractSkills(resumeText.toLowerCase());
     const jobKeywords = extractSkills(jobDescription.toLowerCase());
 
     const matched = jobKeywords.filter(skill => resumeSkills.includes(skill));
     const missing = jobKeywords.filter(skill => !resumeSkills.includes(skill));
 
-    // Weighted Base Score (50% weight)
+    
     let score = jobKeywords.length > 0
         ? Math.min(Math.round((matched.length / jobKeywords.length) * 50), 50)
         : 25;
@@ -32,7 +29,7 @@ export const calculateATSScore = async (resumeText, jobDescription) => {
     let aiAnalysis = "";
     let aiVerdict = "Pending";
 
-    // 2. AI Semantic Deep Dive (50% weight)
+    
     if (apiKey) {
         try {
             const prompt = `
@@ -60,7 +57,7 @@ export const calculateATSScore = async (resumeText, jobDescription) => {
             );
 
             const rawText = aiResponse.data.candidates?.[0]?.content?.parts?.[0]?.text || "{}";
-            // Strip potential markdown code blocks
+            
             const jsonStr = rawText.replace(/```json|```/g, '').trim();
             const result = JSON.parse(jsonStr);
 
@@ -72,7 +69,7 @@ export const calculateATSScore = async (resumeText, jobDescription) => {
             console.error("AI deep analysis fallback:", error.message);
             aiAnalysis = "Semantic match performed based on core technical skill alignment.";
             aiVerdict = score > 35 ? "Strong" : "Average";
-            score += 10; // Fallback bonus for keyword matches
+            score += 10; 
         }
     } else {
         aiAnalysis = "Basic keyword analysis performed. Add server API key for deep semantic insights.";

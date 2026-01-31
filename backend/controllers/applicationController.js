@@ -5,9 +5,9 @@ import { parseResume } from '../utils/resumeParser.js';
 import { calculateATSScore } from '../utils/atsScoring.js';
 import sendEmail from '../utils/sendEmail.js';
 
-// @desc    Apply for a job
-// @route   POST /api/applications
-// @access  Private/Student
+
+
+
 const applyJob = async (req, res) => {
     try {
         if (req.user.role !== 'student') {
@@ -26,7 +26,7 @@ const applyJob = async (req, res) => {
             return res.status(404).json({ message: 'Job not found' });
         }
 
-        // Check if already applied
+        
         const alreadyApplied = await Application.findOne({
             job: jobId,
             applicant: req.user._id
@@ -36,7 +36,7 @@ const applyJob = async (req, res) => {
             return res.status(400).json({ message: 'You have already applied for this job' });
         }
 
-        // ATS Logic
+        
         const resumeText = await parseResume(resumePath);
         const jobKeywords = `${job.description} ${job.requirements.join(' ')}`;
 
@@ -62,9 +62,9 @@ const applyJob = async (req, res) => {
     }
 };
 
-// @desc    Get my applications
-// @route   GET /api/applications/my
-// @access  Private/Student
+
+
+
 const getMyApplications = async (req, res) => {
     try {
         const applications = await Application.find({ applicant: req.user._id })
@@ -76,9 +76,9 @@ const getMyApplications = async (req, res) => {
     }
 };
 
-// @desc    Get applications for a job (Recruiter view)
-// @route   GET /api/applications/job/:jobId
-// @access  Private/Recruiter
+
+
+
 const getJobApplications = async (req, res) => {
     try {
         const { jobId } = req.params;
@@ -89,14 +89,14 @@ const getJobApplications = async (req, res) => {
             return res.status(404).json({ message: 'Job not found' });
         }
 
-        // Check if user is the one who posted the job or is an admin
+        
         if (job.postedBy.toString() !== req.user._id.toString() && req.user.role !== 'admin') {
             return res.status(403).json({ message: 'Not authorized to view applicants for this job. You can only view applicants for jobs you posted.' });
         }
 
         const applications = await Application.find({ job: jobId })
             .populate('applicant', 'name email studentProfile')
-            .sort({ atsScore: -1 }); // Sort by highest score
+            .sort({ atsScore: -1 }); 
 
         res.json(applications);
     } catch (error) {
@@ -104,9 +104,9 @@ const getJobApplications = async (req, res) => {
     }
 };
 
-// @desc    Check if user applied for a job
-// @route   GET /api/applications/check/:jobId
-// @access  Private/Student
+
+
+
 const checkApplicationStatus = async (req, res) => {
     try {
         const application = await Application.findOne({
@@ -120,9 +120,9 @@ const checkApplicationStatus = async (req, res) => {
     }
 };
 
-// @desc    Update application status
-// @route   PUT /api/applications/:id/status
-// @access  Private/Company
+
+
+
 const updateApplicationStatus = async (req, res) => {
     try {
         const { status } = req.body;
@@ -134,7 +134,7 @@ const updateApplicationStatus = async (req, res) => {
             return res.status(404).json({ message: 'Application not found' });
         }
 
-        // Check authorization
+        
         if (application.job.postedBy.toString() !== req.user._id.toString() && req.user.role !== 'admin') {
             return res.status(403).json({ message: 'Not authorized to update status for this application' });
         }
@@ -142,7 +142,7 @@ const updateApplicationStatus = async (req, res) => {
         application.status = status;
         await application.save();
 
-        // Send Email Notification
+        
         let subject = '';
         let message = '';
 
@@ -172,9 +172,9 @@ const updateApplicationStatus = async (req, res) => {
     }
 };
 
-// @desc    Apply for an external job (Company site)
-// @route   POST /api/applications/external
-// @access  Private/Student
+
+
+
 const applyExternalJob = async (req, res) => {
     try {
         const { jobId } = req.body;
@@ -184,7 +184,7 @@ const applyExternalJob = async (req, res) => {
             return res.status(404).json({ message: 'Job not found' });
         }
 
-        // Check if already applied
+        
         const alreadyApplied = await Application.findOne({
             job: jobId,
             applicant: req.user._id
@@ -197,9 +197,9 @@ const applyExternalJob = async (req, res) => {
         const application = await Application.create({
             job: jobId,
             applicant: req.user._id,
-            resume: 'External Application', // Placeholder since it's external
+            resume: 'External Application', 
             status: 'applied',
-            atsScore: 0 // Cannot calculate ATS for external links without file upload
+            atsScore: 0 
         });
 
         res.status(201).json(application);

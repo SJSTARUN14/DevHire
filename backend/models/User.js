@@ -5,17 +5,17 @@ const userSchema = new mongoose.Schema({
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    role: { type: String, enum: ['student', 'recruiter', 'company', 'admin'], required: true }, // simplified company_admin to company
+    role: { type: String, enum: ['student', 'recruiter', 'company', 'admin'], required: true }, 
 
-    // Profile Fields (Student)
+    
     studentProfile: {
-        resume: { type: String }, // URL
+        resume: { type: String }, 
         resumeOriginalName: { type: String },
         skills: [{ type: String }],
         education: [{
             degree: String,
             college: String,
-            batch: String, // Graduation year
+            batch: String, 
         }],
         experience: [{
             role: String,
@@ -25,25 +25,25 @@ const userSchema = new mongoose.Schema({
         photo: { type: String }
     },
 
-    // Recruiter / Company Fields
+    
     companyId: { type: mongoose.Schema.Types.ObjectId, ref: 'Company' },
 
-    // Verification Fields
+    
     isVerified: { type: Boolean, default: false },
     otp: { type: String },
     otpExpires: { type: Date },
 
-    // AI Features
-    geminiApiKey: { type: String, select: false }, // Store separately, not included in normal queries for security
+    
+    geminiApiKey: { type: String, select: false }, 
 
 }, { timestamps: true });
 
-// Password Match Method
+
 userSchema.methods.matchPassword = async function (enteredPassword) {
     return await bcrypt.compare(enteredPassword, this.password);
 };
 
-// Pre-save hashing
+
 userSchema.pre('save', async function () {
     if (!this.isModified('password')) {
         return;

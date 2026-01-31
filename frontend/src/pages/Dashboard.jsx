@@ -50,7 +50,7 @@ const Dashboard = () => {
                 </div>
             </header>
 
-            {/* Stats Overview */}
+            {}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {user?.role === 'student' ? (
                     <>
@@ -107,7 +107,7 @@ const Dashboard = () => {
                 </div>
             </div>
 
-            {/* Recent Activity Section */}
+            {}
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
                 <h2 className="text-lg font-bold text-gray-900 mb-4">Recent Activity</h2>
                 <div className="space-y-4">

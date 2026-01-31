@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// https://vite.dev/config/
+
 export default defineConfig({
   base: '/',
   plugins: [react()],
@@ -14,7 +14,7 @@ export default defineConfig({
             if (id.includes('lucide-react')) return 'lucide';
             if (id.includes('recharts')) return 'charts';
             if (id.includes('react')) return 'vendor-react';
-            return 'vendor'; // all other package dependencies
+            return 'vendor'; 
           }
         },
       },

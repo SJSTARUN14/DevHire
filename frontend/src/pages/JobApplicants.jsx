@@ -86,7 +86,7 @@ const JobApplicants = () => {
                                 </div>
 
                                 <div className="flex flex-col sm:flex-row sm:items-center gap-8">
-                                    {/* Control Panel */}
+                                    {}
                                     <div className="flex items-center gap-1.5 p-1 bg-white border border-gray-100 rounded-2xl shadow-sm">
                                         {app.resume && app.resume !== 'External Application' ? (
                                             <a

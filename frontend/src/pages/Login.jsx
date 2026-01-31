@@ -7,7 +7,7 @@ import Navbar from '../components/Navbar';
 import toast from 'react-hot-toast';
 
 const Login = () => {
-    const [loginRole, setLoginRole] = useState('student'); // Default to student
+    const [loginRole, setLoginRole] = useState('student'); 
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -58,7 +58,7 @@ const Login = () => {
 
             <div className="flex-grow flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-md w-full space-y-8 bg-white p-10 rounded-2xl shadow-xl border border-gray-100 relative overflow-hidden">
-                    {/* Role Selector Tabs */}
+                    {}
                     <div className="flex p-1 bg-gray-100 rounded-xl mb-6">
                         <button
                             type="button"
@@ -196,7 +196,7 @@ const Login = () => {
                 </div>
             </div>
 
-            {/* System Note in small text */}
+            {}
             <div className="pb-8 text-center">
                 <p className="text-[10px] text-gray-300 font-medium tracking-wide">
                     {loginRole === 'student' ? 'FRESHER PORTAL' : 'RECRUITER PORTAL'} • DEVHIRE SYSTEM V1.0

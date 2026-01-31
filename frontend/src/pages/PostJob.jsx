@@ -8,8 +8,8 @@ import { toast } from 'react-hot-toast';
 const PostJob = () => {
     const [formData, setFormData] = useState({
         title: '',
-        companyName: '', // New
-        companyLinkedinUrl: '', // New
+        companyName: '', 
+        companyLinkedinUrl: '', 
         description: '',
         requirements: '',
         location: '',

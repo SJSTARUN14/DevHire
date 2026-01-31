@@ -6,11 +6,11 @@ const getSafeInitialUser = () => {
         const userData = localStorage.getItem('userInfo');
         if (!userData) return null;
         const parsed = JSON.parse(userData);
-        // Only consider it a valid session if we have a name and ID (verified user)
+        
         if (parsed && parsed._id && parsed.name) {
             return parsed;
         }
-        // If it's a partial object (like just needsVerification), clear it
+        
         localStorage.removeItem('userInfo');
         return null;
     } catch (e) {
@@ -30,7 +30,7 @@ const initialState = {
     demoOTP: null
 };
 
-// Verify OTP
+
 export const verifyOTP = createAsyncThunk('auth/verifyOTP', async (otpData, thunkAPI) => {
     try {
         const response = await api.post('auth/verify-otp', otpData);
@@ -44,7 +44,7 @@ export const verifyOTP = createAsyncThunk('auth/verifyOTP', async (otpData, thun
     }
 });
 
-// Login user
+
 export const login = createAsyncThunk('auth/login', async (userData, thunkAPI) => {
     try {
         const response = await api.post('auth/login', userData);
@@ -58,7 +58,7 @@ export const login = createAsyncThunk('auth/login', async (userData, thunkAPI) =
     }
 });
 
-// Logout
+
 export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
     try {
         await api.post('auth/logout', {});
@@ -69,7 +69,7 @@ export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
     }
 });
 
-// Update Profile
+
 export const updateProfile = createAsyncThunk('auth/updateProfile', async (userData, thunkAPI) => {
     try {
         const response = await api.put('auth/profile', userData);
@@ -83,7 +83,7 @@ export const updateProfile = createAsyncThunk('auth/updateProfile', async (userD
     }
 });
 
-// Register
+
 export const register = createAsyncThunk('auth/register', async (userData, thunkAPI) => {
     try {
         const response = await api.post('auth/register', userData);

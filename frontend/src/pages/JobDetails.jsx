@@ -75,12 +75,12 @@ const JobDetails = () => {
 
     const handleLinkedinReferral = () => {
         const company = displayCompanyName;
-        // Construct a highly filtered LinkedIn search for recruiters at the company
+        
         const url = `https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent(company)}+recruiter&origin=GLOBAL_SEARCH_HEADER`;
         window.open(url, '_blank', 'noopener,noreferrer');
     };
 
-    // Move helpers up to avoid temporal dead zone issues
+    
     const getSafeCompanyName = () => {
         if (!job) return 'Company';
         if (job.companyName && job.companyName !== 'Company') return job.companyName;
@@ -245,7 +245,7 @@ ${user?.name || '[My Name]'}`}
                 </div>
             </div>
 
-            {/* Application Modal */}
+            {}
             {
                 showApplyModal && (
                     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
@@ -294,7 +294,7 @@ ${user?.name || '[My Name]'}`}
                 )
             }
 
-            {/* External Application Confirmation Modal */}
+            {}
             {
                 showExternalConfirm && (
                     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">

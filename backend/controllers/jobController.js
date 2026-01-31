@@ -1,9 +1,9 @@
 import Job from '../models/Job.js';
 import Company from '../models/Company.js';
 
-// @desc    Get all jobs
-// @route   GET /api/jobs
-// @access  Public
+
+
+
 const getJobs = async (req, res) => {
     try {
         const pageSize = 10;
@@ -31,9 +31,9 @@ const getJobs = async (req, res) => {
     }
 };
 
-// @desc    Get single job
-// @route   GET /api/jobs/:id
-// @access  Public
+
+
+
 const getJobById = async (req, res) => {
     try {
         const job = await Job.findById(req.params.id).populate('company', 'name logo website about');
@@ -48,14 +48,14 @@ const getJobById = async (req, res) => {
     }
 };
 
-// @desc    Get recruiter's own jobs
-// @route   GET /api/jobs/my
-// @access  Private/Recruiter
+
+
+
 const getMyJobs = async (req, res) => {
     try {
         let query = {};
         if (req.user.role === 'admin') {
-            // Admin sees all
+            
         } else {
             query = { postedBy: req.user._id };
         }
@@ -70,14 +70,14 @@ const getMyJobs = async (req, res) => {
     }
 };
 
-// @desc    Create a job
-// @route   POST /api/jobs
-// @access  Private/Recruiter
+
+
+
 const createJob = async (req, res) => {
     try {
         const { title, description, requirements, salaryRange, location, type, batch, applicationLink, companyName, companyLinkedinUrl } = req.body;
 
-        // Ensure user is a recruiter or admin
+        
         if (req.user.role !== 'recruiter' && req.user.role !== 'admin' && req.user.role !== 'company') {
             return res.status(403).json({ message: 'Not authorized to post jobs' });
         }

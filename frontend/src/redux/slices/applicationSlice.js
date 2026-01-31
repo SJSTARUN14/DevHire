@@ -9,7 +9,7 @@ const initialState = {
     message: ''
 };
 
-// Apply for a job
+
 export const applyForJob = createAsyncThunk('applications/apply', async ({ jobId, resume }, thunkAPI) => {
     try {
         const formData = new FormData();
@@ -28,7 +28,7 @@ export const applyForJob = createAsyncThunk('applications/apply', async ({ jobId
     }
 });
 
-// Apply for a job (External company site)
+
 export const applyExternalJob = createAsyncThunk('applications/applyExternal', async ({ jobId }, thunkAPI) => {
     try {
         const response = await api.post('applications/external', { jobId });
@@ -39,7 +39,7 @@ export const applyExternalJob = createAsyncThunk('applications/applyExternal', a
     }
 });
 
-// Get My Applications
+
 export const getMyApplications = createAsyncThunk('applications/getMy', async (_, thunkAPI) => {
     try {
         const response = await api.get('applications/my');
@@ -50,7 +50,7 @@ export const getMyApplications = createAsyncThunk('applications/getMy', async (_
     }
 });
 
-// Get Applications for a specific job (Recruiter)
+
 export const getJobApplications = createAsyncThunk('applications/getByJob', async (jobId, thunkAPI) => {
     try {
         const response = await api.get(`applications/job/${jobId}`);
@@ -61,7 +61,7 @@ export const getJobApplications = createAsyncThunk('applications/getByJob', asyn
     }
 });
 
-// Update Application Status
+
 export const updateApplicationStatus = createAsyncThunk('applications/updateStatus', async ({ id, status }, thunkAPI) => {
     try {
         const response = await api.put(`applications/${id}/status`, { status });

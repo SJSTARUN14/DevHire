@@ -18,7 +18,7 @@ const ManageJobs = () => {
         };
     }, [dispatch]);
 
-    const myJobs = jobs; // Now jobs are already filtered by backend
+    const myJobs = jobs; 
 
     if (isLoading) return <div className="flex justify-center p-10"><Loader2 className="animate-spin" /></div>;
 

@@ -2,9 +2,9 @@ import { parseResume } from '../utils/resumeParser.js';
 import { calculateATSScore } from '../utils/atsScoring.js';
 import fs from 'fs';
 
-// @desc    Analyze resume against job description without applying
-// @route   POST /api/ats/analyze
-// @access  Public
+
+
+
 const analyzeResume = async (req, res) => {
     try {
         const { jobDescription } = req.body;
@@ -17,14 +17,14 @@ const analyzeResume = async (req, res) => {
         const resumeText = await parseResume(resumePath);
         const atsResult = await calculateATSScore(resumeText, jobDescription);
 
-        // Clean up file
-        // fs.unlinkSync(resumePath); // Optional: keep if you want to reuse, but for check usually delete
+        
+        
 
         res.json({
             score: atsResult.score,
             matchedKeywords: atsResult.matchedKeywords,
             missingKeywords: atsResult.missingKeywords,
-            resumeKeywords: atsResult.resumeKeywords // Optional debug
+            resumeKeywords: atsResult.resumeKeywords 
         });
 
     } catch (error) {

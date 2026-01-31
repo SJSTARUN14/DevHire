@@ -103,7 +103,7 @@ const DashboardLayout = () => {
         <div className="min-h-screen bg-gray-50 flex flex-col">
             <Navbar />
 
-            {/* Mobile Sidebar Toggle */}
+            {}
             <div className="lg:hidden bg-white border-b border-gray-100 px-4 py-3 flex items-center justify-between sticky top-16 z-30">
                 <button
                     onClick={() => setIsSidebarOpen(!isSidebarOpen)}
@@ -117,7 +117,7 @@ const DashboardLayout = () => {
             </div>
 
             <div className="flex flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 gap-8 relative">
-                {/* Desktop Sidebar */}
+                {}
                 <aside className="hidden lg:block w-64 flex-shrink-0">
                     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden sticky top-24">
                         <div className="p-6 border-b border-gray-100">
@@ -137,7 +137,7 @@ const DashboardLayout = () => {
                     </div>
                 </aside>
 
-                {/* Mobile Sidebar Overlay */}
+                {}
                 {isSidebarOpen && (
                     <div
                         className="lg:hidden fixed inset-0 bg-gray-900/50 backdrop-blur-sm z-40"
@@ -145,7 +145,7 @@ const DashboardLayout = () => {
                     />
                 )}
 
-                {/* Mobile Sidebar Content */}
+                {}
                 <aside className={`lg:hidden fixed top-0 left-0 bottom-0 w-72 bg-white z-50 transform transition-transform duration-300 ease-in-out ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
                     <div className="flex flex-col h-full">
                         <div className="p-6 border-b border-gray-100 flex items-center justify-between bg-indigo-600 text-white">
@@ -170,7 +170,7 @@ const DashboardLayout = () => {
                     </div>
                 </aside>
 
-                {/* Main Content */}
+                {}
                 <main className="flex-1 w-full max-w-full overflow-hidden">
                     <Outlet />
                 </main>

@@ -85,8 +85,8 @@ const registerUser = async (req, res) => {
             } catch (emailError) {
                 console.error("Email Sending Error:", emailError.message);
 
-                // Still show the verification screen even if email fails, 
-                // so the user can see the code on the screen in our new 'Demo Fallback'
+                
+                
                 res.status(201).json({
                     message: `Registration successful, but we had trouble sending the email (${emailError.message}).`,
                     needsVerification: true,
@@ -147,7 +147,7 @@ const loginUser = async (req, res) => {
         const user = await User.findOne({ email });
 
         if (user && (await user.matchPassword(password))) {
-            // Check if user's role matches the login selection
+            
             if (role && user.role !== role) {
                 return res.status(401).json({
                     message: `Invalid access. This account is registered as a ${user.role === 'student' ? 'Fresher' : 'Recruiter'}.`

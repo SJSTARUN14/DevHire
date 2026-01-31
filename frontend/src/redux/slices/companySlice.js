@@ -16,7 +16,7 @@ const initialState = {
     message: ''
 };
 
-// Get Company Stats
+
 export const getCompanyStats = createAsyncThunk('company/getStats', async (_, thunkAPI) => {
     try {
         const response = await api.get('companies/stats');
@@ -27,7 +27,7 @@ export const getCompanyStats = createAsyncThunk('company/getStats', async (_, th
     }
 });
 
-// Get Recruiters
+
 export const getRecruiters = createAsyncThunk('company/getRecruiters', async (_, thunkAPI) => {
     try {
         const response = await api.get('companies/recruiters');
@@ -38,7 +38,7 @@ export const getRecruiters = createAsyncThunk('company/getRecruiters', async (_,
     }
 });
 
-// Add Recruiter
+
 export const addRecruiter = createAsyncThunk('company/addRecruiter', async (recruiterData, thunkAPI) => {
     try {
         const response = await api.post('companies/recruiters', recruiterData);

@@ -3,18 +3,18 @@ import mongoose from 'mongoose';
 const jobSchema = new mongoose.Schema({
     title: { type: String, required: true },
     description: { type: String, required: true },
-    requirements: [{ type: String }], // Skills required
+    requirements: [{ type: String }], 
     salaryRange: {
         min: Number,
         max: Number
     },
     location: { type: String },
-    type: { type: String, default: 'Full-time' }, // Remote, On-site, etc.
-    batch: [{ type: String }], // Allowed batches (e.g., 2024, 2025)
+    type: { type: String, default: 'Full-time' }, 
+    batch: [{ type: String }], 
 
     postedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    companyName: { type: String }, // Simply the company name as string
-    companyLinkedinUrl: { type: String }, // For referral links
+    companyName: { type: String }, 
+    companyLinkedinUrl: { type: String }, 
     company: { type: mongoose.Schema.Types.ObjectId, ref: 'Company' },
     applicants: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Application' }],
     applicationLink: { type: String },

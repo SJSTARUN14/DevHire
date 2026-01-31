@@ -1,21 +1,21 @@
 import axios from 'axios';
 
-// Dynamically determine the API base URL
-// Priority: 1. Environment variable 2. Current window location (for same-origin) 3. Localhost fallback
+
+
 const getBaseURL = () => {
     let url = import.meta.env.VITE_API_URL;
 
-    // Fallback logic for production (Render)
+    
     if (!url || url === '/api' || url === '/api/') {
         if (window.location.hostname.includes('onrender.com')) {
-            // HARDCODED FALLBACK for your specific Render backend
+            
             url = 'https://devhire-backend-ewec.onrender.com/api/';
         } else {
             url = 'http://localhost:5000/api/';
         }
     }
 
-    // Ensure it ends with / so axios appends relative paths correctly
+    
     const finalUrl = url.endsWith('/') ? url : `${url}/`;
     console.log("DevHire API Base URL (Active):", finalUrl);
     return finalUrl;
@@ -31,7 +31,7 @@ const api = axios.create({
     },
 });
 
-// Request Interceptor: Log outgoing requests for debugging
+
 api.interceptors.request.use((config) => {
     console.log(`[API REQUEST] ${config.method?.toUpperCase()} ${config.baseURL}${config.url}`, config.data);
     return config;
@@ -39,7 +39,7 @@ api.interceptors.request.use((config) => {
     return Promise.reject(error);
 });
 
-// Response interceptor for handling 401s (stale sessions) and logging
+
 api.interceptors.response.use(
     (response) => {
         console.log(`[API RESPONSE] ${response.status} ${response.config.url}`, response.data);
@@ -52,7 +52,7 @@ api.interceptors.response.use(
             console.warn("Session expired or unauthorized. Clearing local state.");
             localStorage.removeItem('userInfo');
 
-            // For HashRouter, check the hash instead of pathname
+            
             const currentPath = window.location.hash.replace('#', '') || '/';
             if (!['/', '/login', '/register'].includes(currentPath)) {
                 window.location.hash = '/login?expired=true';
@@ -62,7 +62,7 @@ api.interceptors.response.use(
     }
 );
 
-// UPLOAD_URL should be the base domain without the /api/ part
+
 export const UPLOAD_URL = API_BASE_URL.endsWith('/api/')
     ? API_BASE_URL.slice(0, -5)
     : API_BASE_URL.replace('/api/', '');

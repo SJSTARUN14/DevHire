@@ -42,7 +42,7 @@ const ResumeChecker = () => {
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
-                {/* Input Section */}
+                {}
                 <div className="space-y-6">
                     <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
                         <label className="block text-sm font-bold text-gray-700 mb-4">1. Upload Resume</label>
@@ -86,7 +86,7 @@ const ResumeChecker = () => {
                     </button>
                 </div>
 
-                {/* Results Section */}
+                {}
                 <div className="space-y-6">
                     {result ? (
                         <div className="bg-white p-8 rounded-3xl shadow-2xl shadow-indigo-100 border border-indigo-50 animate-in fade-in zoom-in duration-500">
@@ -125,7 +125,7 @@ const ResumeChecker = () => {
                             </div>
 
                             <div className="space-y-8">
-                                {/* Direct Analysis Section */}
+                                {}
                                 <div className="bg-gradient-to-br from-indigo-600 to-violet-700 p-6 rounded-2xl shadow-lg shadow-indigo-100 text-white">
                                     <div className="flex items-center gap-2 font-black text-xs uppercase tracking-widest opacity-80 mb-2">
                                         <Sparkles size={16} /> AI Recruitment Insights
@@ -140,7 +140,7 @@ const ResumeChecker = () => {
                                     )}
                                 </div>
 
-                                {/* Personalized Feedback Section */}
+                                {}
                                 {result.feedback && result.feedback.length > 0 && (
                                     <div>
                                         <h3 className="text-gray-900 font-bold mb-4">Improvement Advice</h3>

@@ -65,7 +65,7 @@ const Register = () => {
 
             <div className="flex-grow flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-md w-full space-y-8 bg-white p-10 rounded-2xl shadow-xl border border-gray-100 relative overflow-hidden">
-                    {/* Role Selector */}
+                    {}
                     {!needsVerification && (
                         <div className="flex p-1 bg-gray-100 rounded-xl mb-6">
                             <button

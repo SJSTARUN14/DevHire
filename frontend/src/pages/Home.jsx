@@ -27,9 +27,9 @@ const Home = () => {
         <div className="min-h-screen bg-white">
             <Navbar />
 
-            {/* Hero Section */}
+            {}
             <section className="relative overflow-hidden pt-16 pb-32 space-y-24">
-                {/* Background Gradients */}
+                {}
                 <div className="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-200 rounded-full blur-3xl opacity-50"></div>
                 <div className="absolute top-20 right-0 translate-x-1/3 w-[600px] h-[600px] bg-indigo-100 rounded-full blur-3xl opacity-60"></div>
 
@@ -61,7 +61,7 @@ const Home = () => {
                 </div>
             </section>
 
-            {/* Features Grid */}
+            {}
             <section className="py-20 bg-gray-50">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-16">
@@ -119,7 +119,7 @@ const Home = () => {
                 </div>
             </section>
 
-            {/* How it Works / About Section */}
+            {}
             <section id="how-it-works" className="py-24 bg-white">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="grid md:grid-cols-2 gap-16 items-center">
@@ -165,7 +165,7 @@ const Home = () => {
                 </div>
             </section>
 
-            {/* Footer / CTA Section */}
+            {}
             <section className="py-20 bg-indigo-600 text-white text-center">
                 <div className="max-w-4xl mx-auto px-4">
                     <h2 className="text-3xl md:text-4xl font-bold mb-8">Ready to Build Your Career?</h2>

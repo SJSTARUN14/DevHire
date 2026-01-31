@@ -26,7 +26,7 @@ const Navbar = () => {
                         </span>
                     </div>
 
-                    {/* Desktop Menu */}
+                    {}
                     <div className="hidden md:flex items-center space-x-8">
                         {user && user.name ? (
                             <>
@@ -64,7 +64,7 @@ const Navbar = () => {
                         )}
                     </div>
 
-                    {/* Mobile Menu Button */}
+                    {}
                     <div className="md:hidden flex items-center">
                         <button onClick={() => setIsOpen(!isOpen)} className="text-gray-600 hover:text-indigo-600">
                             {isOpen ? <X size={24} /> : <Menu size={24} />}
@@ -73,7 +73,7 @@ const Navbar = () => {
                 </div>
             </div>
 
-            {/* Mobile Menu */}
+            {}
             {isOpen && (
                 <div className="md:hidden bg-white border-b border-gray-100">
                     <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">

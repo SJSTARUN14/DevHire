@@ -1,12 +1,9 @@
 import nodemailer from 'nodemailer';
 import { Resend } from 'resend';
 
-/**
- * Sends an email using either Resend (preferred) or Nodemailer (backup).
- * Designed to handle cloud delivery restrictions gracefully.
- */
+
 const sendEmail = async (options) => {
-    // 1. Try Resend first - it's much more reliable on platforms like Render
+    
     if (process.env.RESEND_API_KEY) {
         try {
             console.log(`[Email] Attempting to reach ${options.email} via Resend...`);
@@ -23,7 +20,7 @@ const sendEmail = async (options) => {
 
             if (error) {
                 console.error('[Email Error] Resend reported a problem:', error.message);
-                // If it's a domain verification issue, give the user a helpful tip
+                
                 throw new Error(`Email Service Error: ${error.message}${error.message.includes('verify') ? ' (Tip: You might need to add this recipient to your Resend tester list or verify your domain)' : ''}`);
             }
 
@@ -35,7 +32,7 @@ const sendEmail = async (options) => {
         }
     }
 
-    // 2. Fallback to standard SMTP (Gmail, etc.) only if Resend isn't set up
+    
     console.warn('[Email Warning] No Resend API key found. Falling back to legacy SMTP...');
 
     const host = process.env.SMTP_HOST || 'smtp.gmail.com';
@@ -44,12 +41,12 @@ const sendEmail = async (options) => {
     const transporter = nodemailer.createTransport({
         host: host,
         port: port,
-        secure: port === 465, // Use SSL for port 465
+        secure: port === 465, 
         auth: {
             user: process.env.SMTP_EMAIL,
             pass: process.env.SMTP_PASSWORD,
         },
-        tls: { rejectUnauthorized: false }, // Avoid cert issues in some environments
+        tls: { rejectUnauthorized: false }, 
         connectionTimeout: 20000,
     });
 

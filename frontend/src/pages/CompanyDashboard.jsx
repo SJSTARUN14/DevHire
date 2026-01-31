@@ -43,7 +43,7 @@ const CompanyDashboard = ({ user }) => {
                 </div>
             </header>
 
-            {/* Stats Cards */}
+            {}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
 
 
@@ -85,7 +85,7 @@ const CompanyDashboard = ({ user }) => {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                {/* Chart Section */}
+                {}
                 <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
                     <h3 className="text-lg font-bold text-gray-900 mb-6 flex items-center gap-2">
                         <BarChartIcon size={20} /> Recruitment Activity
@@ -103,7 +103,7 @@ const CompanyDashboard = ({ user }) => {
                     </div>
                 </div>
 
-                {/* Recent Activity Feed */}
+                {}
                 <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
                     <h3 className="text-lg font-bold text-gray-900 mb-6">Recent Activity</h3>
                     <div className="space-y-6">
