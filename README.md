@@ -12,7 +12,7 @@ Hey everyone! Thanks for checking out my project. I built **DevHire** because I 
 ### What can you do on this site?
 
 I tried to keep things very simple:
-*   **If you are a Student:** You can search for the latest jobs, see all the details, and apply with just one click. I also made a dashboard so you can see where you applied.
+*   **If you are a Student:** You can search for the latest jobs, see all the details, and apply with just one click. I also made a dashboard so you can see where you applied. My favorite feature is the **"Referral Format"** - it gives you a ready-made message to send to recruiters!
 *   **If you are a Recruiter (Company):** You can post new jobs in seconds, see everyone who applied, and even check their resumes right there. I also added some cool charts to show your hiring stats and a little bit of AI to help you find the best candidates.
 
 ---
@@ -27,14 +27,18 @@ Here is how the website looks:
 **Smart Features**
 ![Features](./screenshots/features.png)
 
-**Easy Registration**
-![Register](./screenshots/register.png)
+**Referral Format for Students**
+*(I added this to help freshers reach out to companies easily!)*
+![Job Details](./screenshots/job_details.png)
 
-**Student Dashboard**
-![Dashboard](./screenshots/dashboard.png)
+**Recruiter Dashboard**
+![Recruiter Dashboard](./screenshots/recruiter_dashboard.png)
 
-**Latest Jobs Board**
-![Jobs](./screenshots/jobs.png)
+**Posting a New Job**
+![Post Job](./screenshots/post_job.png)
+
+**Managing Jobs**
+![Manage Jobs](./screenshots/manage_jobs.png)
 
 ---
 
