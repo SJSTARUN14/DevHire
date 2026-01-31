@@ -1,8 +1,8 @@
-# 🚀 DevHire - My Job Portal Project
+#  DevHire - My Job Portal Project
 
 Hey everyone! Thanks for checking out my project. I built **DevHire** because I wanted to make a simple and clean place where students can find jobs and companies can hire them without any confusion. It's a full-stack project I worked really hard on.
 
-### 🔗 Live Link to see the site
+###  Live Link to see the site
 **[Click here to open DevHire](https://devhire-frontend.onrender.com)**  
 
 > **Note:** Since I am using a free server, please wait for about 30-40 seconds for the page to open the first time. The server needs a little time to "wake up." Once it starts, it works perfectly!
@@ -17,7 +17,11 @@ I tried to keep things very simple:
 
 ---
 
+<<<<<<< HEAD
 ### 📸 App Gallery
+=======
+###  Screenshots of the App
+>>>>>>> dc2c202508b1c15f9a68d3a8ea40efe7daed64e1
 
 <div align="center">
   <h3>Home Page</h3>
