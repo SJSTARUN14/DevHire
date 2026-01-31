@@ -2,9 +2,9 @@ import nodemailer from 'nodemailer';
 
 const sendEmail = async (options) => {
     const transporter = nodemailer.createTransport({
-        host: 'smtp.gmail.com',
-        port: 465,
-        secure: true, // true for 465, false for 587
+        host: process.env.SMTP_HOST || 'smtp.gmail.com',
+        port: parseInt(process.env.SMTP_PORT || 587),
+        secure: process.env.SMTP_PORT == 465, // true for 465, false for others
         auth: {
             user: process.env.SMTP_EMAIL,
             pass: process.env.SMTP_PASSWORD,
@@ -12,9 +12,9 @@ const sendEmail = async (options) => {
         tls: {
             rejectUnauthorized: false
         },
-        connectionTimeout: 20000, // 20 seconds
-        greetingTimeout: 20000,
-        socketTimeout: 20000,
+        connectionTimeout: 10000,
+        greetingTimeout: 10000,
+        socketTimeout: 10000,
     });
 
     const message = {

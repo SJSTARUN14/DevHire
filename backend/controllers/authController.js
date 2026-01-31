@@ -8,7 +8,12 @@ import mongoose from 'mongoose';
 const registerUser = async (req, res) => {
     try {
         const { name, email, password, role } = req.body;
-        console.log(`Registration attempt: ${name} (${email}) | Role: ${role}`);
+        console.log(`[AUTH] Registration Request: ${email} as ${role}`);
+
+        if (!name || !email || !password || !role) {
+            console.log('[AUTH] Registration failed: Missing fields');
+            return res.status(400).json({ message: 'Please provide all required fields' });
+        }
 
         if (mongoose.connection.readyState !== 1) {
             return res.status(503).json({ message: 'Database is currently unavailable.' });
