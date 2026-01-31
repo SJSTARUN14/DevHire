@@ -23,7 +23,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Request Logging
 app.use((req, res, next) => {
-    console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+    console.log(`[${new Date().toISOString()}] ${req.method} ${req.url} (Original: ${req.originalUrl})`);
     next();
 });
 const allowedOrigins = [
@@ -74,6 +74,14 @@ app.use('/api/applications', applicationRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/ats', atsRoutes);
 app.use('/api/companies', companyRoutes);
+
+// Root API route
+app.get('/api', (req, res) => {
+    res.json({
+        message: 'DevHire API is running',
+        version: '1.0.0'
+    });
+});
 
 app.get('/api/health', (req, res) => {
     const dbStatus = mongoose.connection.readyState === 1 ? 'Connected' : 'Disconnected';
