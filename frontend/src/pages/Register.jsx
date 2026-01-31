@@ -209,8 +209,8 @@ const Register = () => {
                                 {message && message.includes('trouble') && (
                                     <div className="mt-4 p-4 bg-amber-50 border border-amber-200 rounded-xl">
                                         <p className="text-xs text-amber-800 font-medium">
-                                            <span className="font-bold">Demo Mode Notification:</span><br />
-                                            Email delivery is limited. Since the email couldn't be sent, please use the code below to continue:
+                                            <span className="font-bold">Notice:</span><br />
+                                            Email delivery is taking a little while. You can use this verification code to continue immediately:
                                         </p>
                                         <div className="mt-2 text-center text-lg font-mono font-bold text-amber-900 tracking-widest">
                                             {message.match(/\d{6}/)?.[0] || 'Check logs'}

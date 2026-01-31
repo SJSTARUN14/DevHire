@@ -1,11 +1,15 @@
 import nodemailer from 'nodemailer';
 import { Resend } from 'resend';
 
+/**
+ * Sends an email using either Resend (preferred) or Nodemailer (backup).
+ * Designed to handle cloud delivery restrictions gracefully.
+ */
 const sendEmail = async (options) => {
-    // 1. HIGH-RELIABILITY OPTION: RESEND SDK
+    // 1. Try Resend first - it's much more reliable on platforms like Render
     if (process.env.RESEND_API_KEY) {
         try {
-            console.log(`[RESEND] Attempting delivery to ${options.email}...`);
+            console.log(`[Email] Attempting to reach ${options.email} via Resend...`);
             const resend = new Resend(process.env.RESEND_API_KEY);
 
             const from = process.env.FROM_EMAIL || 'onboarding@resend.dev';
@@ -18,21 +22,21 @@ const sendEmail = async (options) => {
             });
 
             if (error) {
-                console.error('[RESEND ERROR]', error.message);
-                // Report Resend errors directly. Do NOT fallback to SMTP which we know is blocked on Render.
-                throw new Error(`Email Service Error: ${error.message}${error.message.includes('verify') ? ' (Add recipient to Resend testing list or verify your domain)' : ''}`);
+                console.error('[Email Error] Resend reported a problem:', error.message);
+                // If it's a domain verification issue, give the user a helpful tip
+                throw new Error(`Email Service Error: ${error.message}${error.message.includes('verify') ? ' (Tip: You might need to add this recipient to your Resend tester list or verify your domain)' : ''}`);
             }
 
-            console.log('[RESEND] Email delivered successfully via SDK');
+            console.log('[Email] Success! Message sent via Resend SDK.');
             return data;
         } catch (err) {
-            console.error('[RESEND CRITICAL]', err.message);
-            throw err; // Stop here, do not fallback to slow/blocked SMTP
+            console.error('[Email Critical] Resend failed and we cannot fallback to SMTP on this platform:', err.message);
+            throw err;
         }
     }
 
-    // 2. FALLBACK OPTION: NODEMAILER (Only if Resend key is missing)
-    console.warn('[SMTP] Resend API Key missing. Using legacy SMTP (High risk of timeout on Cloud Platforms)');
+    // 2. Fallback to standard SMTP (Gmail, etc.) only if Resend isn't set up
+    console.warn('[Email Warning] No Resend API key found. Falling back to legacy SMTP...');
 
     const host = process.env.SMTP_HOST || 'smtp.gmail.com';
     const port = parseInt(process.env.SMTP_PORT || 587);
@@ -40,12 +44,12 @@ const sendEmail = async (options) => {
     const transporter = nodemailer.createTransport({
         host: host,
         port: port,
-        secure: port === 465,
+        secure: port === 465, // Use SSL for port 465
         auth: {
             user: process.env.SMTP_EMAIL,
             pass: process.env.SMTP_PASSWORD,
         },
-        tls: { rejectUnauthorized: false },
+        tls: { rejectUnauthorized: false }, // Avoid cert issues in some environments
         connectionTimeout: 20000,
     });
 
@@ -57,11 +61,11 @@ const sendEmail = async (options) => {
     };
 
     try {
-        console.log(`[SMTP] Attempting delivery to ${options.email} via ${host}:${port}...`);
+        console.log(`[Email] Sending to ${options.email} via ${host}...`);
         await transporter.sendMail(message);
-        console.log('[SMTP] Email delivered successfully');
+        console.log('[Email] Success! Message delivered via SMTP.');
     } catch (error) {
-        console.error('[SMTP ERROR]', error.message);
+        console.error('[Email Error] SMTP delivery failed:', error.message);
         throw new Error(`Email delivery failed (SMTP): ${error.message}`);
     }
 };
