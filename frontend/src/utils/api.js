@@ -51,9 +51,11 @@ api.interceptors.response.use(
         if (error.response && error.response.status === 401) {
             console.warn("Session expired or unauthorized. Clearing local state.");
             localStorage.removeItem('userInfo');
-            // If we are not already on login/register/home, redirect or refresh
-            if (!['/', '/login', '/register'].includes(window.location.pathname)) {
-                window.location.href = '/login?expired=true';
+
+            // For HashRouter, check the hash instead of pathname
+            const currentPath = window.location.hash.replace('#', '') || '/';
+            if (!['/', '/login', '/register'].includes(currentPath)) {
+                window.location.hash = '/login?expired=true';
             }
         }
         return Promise.reject(error);
