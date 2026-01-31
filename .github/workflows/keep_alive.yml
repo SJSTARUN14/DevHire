@@ -2,9 +2,9 @@ name: Keep Render Awake
 
 on:
   schedule:
-    # Runs every 14 minutes to prevent Render's 15-minute sleep timer
+ 
     - cron: '*/14 * * * *'
-  workflow_dispatch: # Allows manual trigger for testing
+  workflow_dispatch: 
 
 jobs:
   ping:
