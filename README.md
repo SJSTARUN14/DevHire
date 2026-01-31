@@ -15,13 +15,9 @@ I tried to keep things very simple:
 *   **If you are a Student:** You can search for the latest jobs, see all the details, and apply with just one click. I also made a dashboard so you can see where you applied. My favorite feature is the **"Referral Format"** - it gives you a ready-made message to send to recruiters!
 *   **If you are a Recruiter (Company):** You can post new jobs in seconds, see everyone who applied, and even check their resumes right there. I also added some cool charts to show your hiring stats and a little bit of AI to help you find the best candidates.
 
----
 
-<<<<<<< HEAD
-### 📸 App Gallery
-=======
+
 ###  Screenshots of the App
->>>>>>> dc2c202508b1c15f9a68d3a8ea40efe7daed64e1
 
 <div align="center">
   <h3>Home Page</h3>
