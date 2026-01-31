@@ -11,6 +11,7 @@ import userRoutes from './routes/userRoutes.js';
 import atsRoutes from './routes/atsRoutes.js';
 import companyRoutes from './routes/companyRoutes.js';
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
+import sendEmail from './utils/sendEmail.js';
 
 dotenv.config();
 
