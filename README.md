@@ -1,4 +1,4 @@
-# 🚀 DevHire - My Job Portal Project
+#  DevHire - My Job Portal Project
 
 Hey everyone! Thanks for checking out my project. I built **DevHire** because I wanted to make a simple and clean place where students can find jobs and companies can hire them without any confusion. It's a full-stack project I worked really hard on.
 
@@ -17,7 +17,7 @@ I tried to keep things very simple:
 
 ---
 
-### 📸 Screenshots of the App
+###  Screenshots of the App
 
 Here is how the website looks:
 
