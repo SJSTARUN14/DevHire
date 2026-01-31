@@ -46,7 +46,7 @@ const registerUser = async (req, res) => {
                     console.error("Existing User Email Error:", emailError.message);
 
                     return res.status(200).json({
-                        message: `Registration successful, but we had trouble sending the verification email (${emailError.message}). Please contact support if this persists.`,
+                        message: `Registration successful, but we had trouble sending the verification email (${emailError.message}). YOUR DEMO CODE IS: ${otp}`,
                         needsVerification: true,
                         email: userExists.email
                     });
@@ -89,8 +89,7 @@ const registerUser = async (req, res) => {
                 res.status(201).json({
                     message: `Registration successful, but we had trouble sending the email (${emailError.message}). YOUR DEMO CODE IS: ${otp}`,
                     needsVerification: true,
-                    email: user.email,
-                    error: emailError.message
+                    email: user.email
                 });
             }
         } else {

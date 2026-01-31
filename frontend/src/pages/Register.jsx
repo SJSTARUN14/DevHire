@@ -206,14 +206,14 @@ const Register = () => {
                                         />
                                     </div>
                                 </div>
-                                {message && message.includes('trouble') && (
+                                {message && (message.includes('trouble') || message.includes('DEMO CODE')) && (
                                     <div className="mt-4 p-4 bg-amber-50 border border-amber-200 rounded-xl">
                                         <p className="text-xs text-amber-800 font-medium">
                                             <span className="font-bold">Notice:</span><br />
                                             Email delivery is taking a little while. You can use this verification code to continue immediately:
                                         </p>
                                         <div className="mt-2 text-center text-lg font-mono font-bold text-amber-900 tracking-widest">
-                                            {message.match(/\d{6}/)?.[0] || 'Check logs'}
+                                            {message.match(/\d{6}/)?.[0] || <span className="text-xs text-amber-600">Please check logs or contact support</span>}
                                         </div>
                                     </div>
                                 )}
