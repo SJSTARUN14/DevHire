@@ -26,7 +26,8 @@ const initialState = {
     isSuccess: false,
     message: '',
     needsVerification: false,
-    emailForVerification: ''
+    emailForVerification: '',
+    demoOTP: null
 };
 
 // Verify OTP
@@ -107,6 +108,7 @@ const authSlice = createSlice({
             state.message = '';
             state.needsVerification = false;
             state.emailForVerification = '';
+            state.demoOTP = null;
         },
     },
     extraReducers: (builder) => {
@@ -120,6 +122,7 @@ const authSlice = createSlice({
                     state.needsVerification = true;
                     state.emailForVerification = action.payload.email;
                     state.message = action.payload.message;
+                    state.demoOTP = action.payload.otp;
                 } else {
                     state.isSuccess = true;
                     state.user = action.payload;
@@ -140,6 +143,7 @@ const authSlice = createSlice({
                     state.needsVerification = true;
                     state.emailForVerification = action.payload.email;
                     state.message = action.payload.message;
+                    state.demoOTP = action.payload.otp;
                 } else {
                     state.isSuccess = true;
                     state.user = action.payload;
@@ -160,6 +164,7 @@ const authSlice = createSlice({
                 state.user = action.payload;
                 state.needsVerification = false;
                 state.emailForVerification = '';
+                state.demoOTP = null;
             })
             .addCase(verifyOTP.rejected, (state, action) => {
                 state.isLoading = false;
