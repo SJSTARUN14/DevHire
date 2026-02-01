@@ -75,12 +75,12 @@ const JobDetails = () => {
 
     const handleLinkedinReferral = () => {
         const company = displayCompanyName;
-        
+
         const url = `https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent(company)}+recruiter&origin=GLOBAL_SEARCH_HEADER`;
         window.open(url, '_blank', 'noopener,noreferrer');
     };
 
-    
+
     const getSafeCompanyName = () => {
         if (!job) return 'Company';
         if (job.companyName && job.companyName !== 'Company') return job.companyName;
@@ -183,39 +183,52 @@ const JobDetails = () => {
                             <div>
                                 <h3 className="text-xl font-black text-gray-900 flex items-center gap-2 uppercase tracking-tight">
                                     <Sparkles size={24} className="text-indigo-600" />
-                                    Ask for Referral Format
+                                    Get Referral & Contact Recruiter
                                 </h3>
-                                <p className="text-sm text-gray-500 font-medium">Use this professional template to reach out to recruiters on LinkedIn.</p>
+                                <p className="text-sm text-gray-500 font-medium">Use this professional template to reach out on LinkedIn for a referral.</p>
                             </div>
                         </div>
 
                         <div className="bg-white p-8 rounded-3xl border border-indigo-100 shadow-xl shadow-indigo-100/20 relative group overflow-hidden">
                             <div className="absolute top-0 left-0 w-1 h-full bg-indigo-600"></div>
+                            <div className="mb-4 flex items-center justify-between">
+                                <span className="text-xs font-bold text-indigo-600 uppercase tracking-widest bg-indigo-50 px-2 py-1 rounded">Professional Referral Request</span>
+                                <span className="text-[10px] text-gray-400 font-medium italic">Click copy and send to employees at {displayCompanyName}</span>
+                            </div>
                             <pre className="whitespace-pre-wrap font-sans text-gray-700 leading-relaxed text-base">
-                                {`Hi [Recipient Name],
+                                {`Hi [Name],
 
-I came across the ${job.title} role at ${displayCompanyName} in ${job.location || 'Remote'} (JOB ID: ${job._id}) and I’m very interested in this opportunity.
+Hope you're doing well! 
 
-It would really help me if you could consider referring me for this role.
+I'm reaching out because I'm very interested in the ${job.title} position at ${displayCompanyName} (Job ID: ${job._id.slice(-6).toUpperCase()}). Given your experience at the company, I was wondering if you would be open to referring me for this role?
 
-Thank you,
-${user?.name || '[My Name]'}`}
+I've already researched the requirements and believe my background in ${job.requirements?.[0] || 'Technical Development'} aligns well with the team's goals. I'd be happy to share my resume and portfolio if you're open to it.
+
+Thank you for your time and consideration!
+
+Best regards,
+${user?.name || '[Your Name]'}`}
                             </pre>
                             <button
                                 onClick={() => {
-                                    const text = `Hi [Recipient Name],\n\nI came across the ${job.title} role at ${displayCompanyName} in ${job.location || 'Remote'} (JOB ID: ${job._id}) and I’m very interested in this opportunity.\n\nIt would really help me if you could consider referring me for this role.\n\nThank you,\n${user?.name || '[My Name]'}`;
+                                    const text = `Hi [Name],\n\nHope you're doing well! \n\nI'm reaching out because I'm very interested in the ${job.title} position at ${displayCompanyName} (Job ID: ${job._id.slice(-6).toUpperCase()}). Given your experience at the company, I was wondering if you would be open to referring me for this role?\n\nI've already researched the requirements and believe my background in ${job.requirements?.[0] || 'Technical Development'} aligns well with the team's goals. I'd be happy to share my resume and portfolio if you're open to it.\n\nThank you for your time and consideration!\n\nBest regards,\n${user?.name || '[Your Name]'}`;
                                     navigator.clipboard.writeText(text);
-                                    toast.success("Referral format copied!");
+                                    toast.success("Referral request copied!");
                                 }}
                                 className="absolute top-6 right-6 p-4 text-white bg-indigo-600 hover:bg-indigo-700 rounded-2xl transition-all shadow-lg hover:scale-105 active:scale-95 flex items-center gap-2 font-bold text-sm"
                                 title="Copy to clipboard"
                             >
-                                <FileText size={20} /> COPY MESSAGE
+                                <FileText size={20} /> COPY
                             </button>
                         </div>
 
-                        <div className="mt-4 flex items-center gap-2 text-[10px] font-black text-indigo-400 uppercase tracking-widest bg-white/50 w-fit px-3 py-1 rounded-full border border-indigo-50">
-                            <CheckCircle size={10} /> Ready to send on LinkedIn
+                        <div className="mt-6 flex flex-col md:flex-row gap-4 items-center">
+                            <div className="flex items-center gap-2 text-[10px] font-black text-indigo-500 uppercase tracking-widest bg-white/50 w-fit px-3 py-1.5 rounded-full border border-indigo-50">
+                                <CheckCircle size={12} /> Personalized for {user?.name || 'you'}
+                            </div>
+                            <div className="text-sm text-gray-400 font-medium">
+                                Step 2: Click <span className="font-bold text-indigo-600">"Contact Recruiter"</span> above to find people to send this to.
+                            </div>
                         </div>
                     </div>
                 )}
@@ -245,7 +258,7 @@ ${user?.name || '[My Name]'}`}
                 </div>
             </div>
 
-            {}
+            { }
             {
                 showApplyModal && (
                     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
@@ -294,7 +307,7 @@ ${user?.name || '[My Name]'}`}
                 )
             }
 
-            {}
+            { }
             {
                 showExternalConfirm && (
                     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
