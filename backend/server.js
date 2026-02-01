@@ -12,6 +12,7 @@ import atsRoutes from './routes/atsRoutes.js';
 import companyRoutes from './routes/companyRoutes.js';
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 import sendEmail from './utils/sendEmail.js';
+import axios from 'axios';
 
 
 dotenv.config();
@@ -23,7 +24,7 @@ const PORT = process.env.PORT || 5000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use('/uploads', express.static('uploads')); 
+app.use('/uploads', express.static('uploads'));
 
 
 app.use((req, res, next) => {
@@ -36,12 +37,12 @@ const allowedOrigins = [
     'http://localhost:5173',
     'http://127.0.0.1:5173',
     process.env.FRONTEND_URL,
-    /\.onrender\.com$/ 
+    /\.onrender\.com$/
 ].filter(Boolean);
 
 app.use(cors({
     origin: (origin, callback) => {
-        
+
         if (!origin) return callback(null, true);
 
         const isAllowed = allowedOrigins.some(allowed => {
@@ -116,6 +117,21 @@ const startServer = async () => {
 
     app.listen(PORT, () => {
         console.log(`🚀 Server is blasting off on port ${PORT} in ${process.env.NODE_ENV || 'development'} mode!`);
+
+        // Self-pinging mechanism to keep Render instance awake
+        if (process.env.NODE_ENV === 'production') {
+            const serverUrl = process.env.BACKEND_URL || `http://localhost:${PORT}`;
+            console.log(`Setting up self-ping to ${serverUrl} every 14 minutes...`);
+
+            setInterval(async () => {
+                try {
+                    await axios.get(`${serverUrl}/api/health`);
+                    console.log(`[Self-Ping] Successfully pinged the server at ${new Date().toLocaleTimeString()}`);
+                } catch (error) {
+                    console.error(`[Self-Ping] Failed to ping server: ${error.message}`);
+                }
+            }, 14 * 60 * 1000); // 14 minutes
+        }
     });
 };
 
