@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -38,7 +38,6 @@ function App() {
             <Route path="/recruiters" element={<Recruiters />} />
             <Route path="/analytics" element={<Analytics />} />
           </Route>
-          <Route path="*" element={<div style={{ padding: '20px', color: 'red', fontWeight: 'bold' }}>No route matched this path! Current path: {window.location.hash || window.location.pathname}</div>} />
         </Routes>
       </div>
     </Router>
