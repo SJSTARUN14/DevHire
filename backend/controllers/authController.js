@@ -85,8 +85,8 @@ const registerUser = async (req, res) => {
             } catch (emailError) {
                 console.error("Email Sending Error:", emailError.message);
 
-                
-                
+
+
                 res.status(201).json({
                     message: `Registration successful, but we had trouble sending the email (${emailError.message}).`,
                     needsVerification: true,
@@ -122,14 +122,15 @@ const verifyOTP = async (req, res) => {
         user.otpExpires = undefined;
         await user.save();
 
-        generateToken(res, user._id);
+        const token = generateToken(res, user._id);
 
         res.status(200).json({
             _id: user._id,
             name: user.name,
             email: user.email,
             role: user.role,
-            isVerified: user.isVerified
+            isVerified: user.isVerified,
+            token
         });
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -147,7 +148,7 @@ const loginUser = async (req, res) => {
         const user = await User.findOne({ email });
 
         if (user && (await user.matchPassword(password))) {
-            
+
             if (role && user.role !== role) {
                 return res.status(401).json({
                     message: `Invalid access. This account is registered as a ${user.role === 'student' ? 'Fresher' : 'Recruiter'}.`
@@ -163,14 +164,15 @@ const loginUser = async (req, res) => {
             }
 
             console.log(`Setting login cookie for user: ${user.email}`);
-            generateToken(res, user._id);
+            const token = generateToken(res, user._id);
             res.json({
                 _id: user._id,
                 name: user.name,
                 email: user.email,
                 role: user.role,
                 companyId: user.companyId,
-                studentProfile: user.studentProfile
+                studentProfile: user.studentProfile,
+                token
             });
         } else {
             res.status(401).json({ message: 'Invalid email or password' });

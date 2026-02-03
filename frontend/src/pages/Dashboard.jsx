@@ -17,18 +17,22 @@ const Dashboard = () => {
     useEffect(() => {
         if (user?.role === 'student') {
             const fetchStats = async () => {
+                // If we are in the middle of logging in or don't have a token, wait
+                if (!user.token) {
+                    console.warn("No token found for student user, skipping stats fetch.");
+                    return;
+                }
+
                 try {
                     const { data } = await api.get('users/stats');
                     setStats(data);
                 } catch (error) {
-                    const message = error.response?.data?.message || error.message || "Could not fetch stats";
-                    toast.error(message);
                     console.error("Error fetching stats:", error);
                 }
             };
             fetchStats();
         }
-    }, [user]);
+    }, [user, user?.token]);
 
     if (user?.role === 'recruiter' || user?.role === 'admin' || user?.role === 'company') {
         return <CompanyDashboard user={user} />;
@@ -50,7 +54,7 @@ const Dashboard = () => {
                 </div>
             </header>
 
-            {}
+            { }
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {user?.role === 'student' ? (
                     <>
@@ -107,7 +111,7 @@ const Dashboard = () => {
                 </div>
             </div>
 
-            {}
+            { }
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
                 <h2 className="text-lg font-bold text-gray-900 mb-4">Recent Activity</h2>
                 <div className="space-y-4">

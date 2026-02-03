@@ -7,7 +7,7 @@ import Navbar from '../components/Navbar';
 import toast from 'react-hot-toast';
 
 const Login = () => {
-    const [loginRole, setLoginRole] = useState('student'); 
+    const [loginRole, setLoginRole] = useState('student');
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -31,7 +31,11 @@ const Login = () => {
 
         if (isSuccess && user) {
             toast.success('Logged in successfully', { id: 'login-success' });
-            navigate('/dashboard');
+            // Small delay to ensure localStorage and state are fully synced before navigation
+            const timer = setTimeout(() => {
+                navigate('/dashboard');
+            }, 500);
+            return () => clearTimeout(timer);
         }
     }, [user, isError, isSuccess, message, navigate, dispatch]);
 
@@ -58,7 +62,7 @@ const Login = () => {
 
             <div className="flex-grow flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-md w-full space-y-8 bg-white p-10 rounded-2xl shadow-xl border border-gray-100 relative overflow-hidden">
-                    {}
+                    { }
                     <div className="flex p-1 bg-gray-100 rounded-xl mb-6">
                         <button
                             type="button"
@@ -135,7 +139,10 @@ const Login = () => {
                                     className={`group relative w-full flex justify-center py-3.5 px-4 border border-transparent text-sm font-bold rounded-xl text-white transition-all shadow-lg ${loginRole === 'student' ? 'bg-indigo-600 hover:bg-indigo-700 shadow-indigo-100' : 'bg-gray-800 hover:bg-gray-900 shadow-gray-200'} disabled:opacity-70 disabled:cursor-not-allowed`}
                                 >
                                     {isLoading ? (
-                                        <Loader2 className="animate-spin h-5 w-5" />
+                                        <div className="flex flex-col items-center gap-1">
+                                            <Loader2 className="animate-spin h-5 w-5" />
+                                            <span className="text-[10px] opacity-70 animate-pulse">Waking up server...</span>
+                                        </div>
                                     ) : (
                                         <span className="flex items-center gap-2">
                                             Sign in to Dashboard <ArrowRight size={16} />
@@ -196,7 +203,7 @@ const Login = () => {
                 </div>
             </div>
 
-            {}
+            { }
             <div className="pb-8 text-center">
                 <p className="text-[10px] text-gray-300 font-medium tracking-wide">
                     {loginRole === 'student' ? 'FRESHER PORTAL' : 'RECRUITER PORTAL'} • DEVHIRE SYSTEM V1.0

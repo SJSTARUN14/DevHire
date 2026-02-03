@@ -6,11 +6,14 @@ const getSafeInitialUser = () => {
         const userData = localStorage.getItem('userInfo');
         if (!userData) return null;
         const parsed = JSON.parse(userData);
-        
-        if (parsed && parsed._id && parsed.name) {
+
+        // CRITICAL: We now require a token to be present.
+        // This clears old "cookie-only" session data that fails in Incognito.
+        if (parsed && parsed._id && parsed.name && parsed.token) {
             return parsed;
         }
-        
+
+        console.warn("Legacy or incomplete session found. Clearing for safety.");
         localStorage.removeItem('userInfo');
         return null;
     } catch (e) {

@@ -1,23 +1,18 @@
 import axios from 'axios';
-
-
+import toast from 'react-hot-toast';
 
 const getBaseURL = () => {
     let url = import.meta.env.VITE_API_URL;
 
-    
     if (!url || url === '/api' || url === '/api/') {
         if (window.location.hostname.includes('onrender.com')) {
-            
             url = 'https://devhire-backend-ewec.onrender.com/api/';
         } else {
             url = 'http://localhost:5000/api/';
         }
     }
 
-    
     const finalUrl = url.endsWith('/') ? url : `${url}/`;
-    console.log("DevHire API Base URL (Active):", finalUrl);
     return finalUrl;
 };
 
@@ -31,40 +26,73 @@ const api = axios.create({
     },
 });
 
-
 api.interceptors.request.use((config) => {
-    console.log(`[API REQUEST] ${config.method?.toUpperCase()} ${config.baseURL}${config.url}`, config.data);
+    try {
+        const userInfo = localStorage.getItem('userInfo');
+        if (userInfo) {
+            const parsed = JSON.parse(userInfo);
+            // Attach Bearer token if it exists in localStorage
+            if (parsed && parsed.token) {
+                config.headers['Authorization'] = `Bearer ${parsed.token}`;
+            }
+        }
+    } catch (e) {
+        console.error("Error setting auth header", e);
+    }
+
     return config;
 }, (error) => {
     return Promise.reject(error);
 });
 
+// For deduplicating error messages
+let lastErrorMsg = "";
+let lastErrorTime = 0;
 
+// Response interceptor to handle session expiration and global error messages
 api.interceptors.response.use(
     (response) => {
-        console.log(`[API RESPONSE] ${response.status} ${response.config.url}`, response.data);
         return response;
     },
     (error) => {
-        console.error(`[API ERROR] ${error.response?.status || 'NETWORK'} ${error.config?.url}`, error.response?.data || error.message);
+        const status = error.response?.status;
+        const msg = error.response?.data?.message || error.message || "An error occurred";
+        const now = Date.now();
 
-        if (error.response && error.response.status === 401) {
-            console.warn("Session expired or unauthorized. Clearing local state.");
-            localStorage.removeItem('userInfo');
+        // Only show toast if it's a new message or enough time has passed
+        // This stops the "flood" of notifications
+        if (msg !== lastErrorMsg || now - lastErrorTime > 3000) {
+            if (status === 401) {
+                // Use a fixed ID for 401 errors so they overwrite each other rather than stacking
+                toast.error(msg, { id: 'auth-error' });
+            } else {
+                toast.error(msg);
+            }
+            lastErrorMsg = msg;
+            lastErrorTime = now;
+        }
 
-            
+        if (status === 401 && (msg.toLowerCase().includes('token') || msg.toLowerCase().includes('authorized'))) {
             const currentPath = window.location.hash.replace('#', '') || '/';
-            if (!['/', '/login', '/register'].includes(currentPath)) {
-                window.location.hash = '/login?expired=true';
+            const publicPages = ['/', '/login', '/register'];
+
+            if (!publicPages.includes(currentPath)) {
+                console.warn("Unauthorized request detected. Clearing session.");
+                localStorage.removeItem('userInfo');
+
+                if (!window._redirecting) {
+                    window._redirecting = true;
+                    setTimeout(() => {
+                        window.location.hash = '/login?expired=true';
+                        setTimeout(() => window._redirecting = false, 2000);
+                    }, 500);
+                }
             }
         }
         return Promise.reject(error);
     }
 );
 
-
-export const UPLOAD_URL = API_BASE_URL.endsWith('/api/')
-    ? API_BASE_URL.slice(0, -5)
-    : API_BASE_URL.replace('/api/', '');
+export const UPLOAD_URL = API_BASE_URL.replace('/api/', '').replace(/\/$/, '');
 
 export default api;
